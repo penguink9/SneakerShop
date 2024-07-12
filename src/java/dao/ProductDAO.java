@@ -139,6 +139,35 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
+    public List<Product> get12Last() {
+    	List<Product> list = new ArrayList<>();
+        String sql = "select top 12 * from Products order by [ProductID] desc";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+            	list.add(extractProductFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Product> getTop4BestSelling() {
+        List<Product> listProduct = new ArrayList<>();
+
+        String sql = "SELECT TOP 4 * FROM Products ORDER BY [QuantitySold] DESC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            listProduct.add(extractProductFromResultSet(resultSet));
+        }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listProduct;
+    }
 
     private Product extractProductFromResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("ProductID");
@@ -176,7 +205,7 @@ public class ProductDAO extends DBContext {
     }
     public static void main(String[] args) {
         ProductDAO dao= new ProductDAO();
-        List<Product> list= dao.getAllProducts();
+        List<Product> list= dao.get12Last();
         for(Product p: list) {
             System.out.println(p);
         }

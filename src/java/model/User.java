@@ -1,22 +1,18 @@
 
 package model;
 
-import java.util.Date;
-
 public class User {
-    private int userID;
     private String userName;
     private String fullName;
     private String password;
     private int roleID;
     private String imageURL;
     private String email;
-    private Date birthDay;
+    private String birthDay;
     private String address;
     private String phone;
 
-    public User(int userID, String userName, String fullName, String password, int roleID, String imageURL, String email, Date birthDay, String address, String phone) {
-        this.userID = userID;
+    public User(String userName, String fullName, String password, int roleID, String imageURL, String email, String birthDay, String address, String phone) {
         this.userName = userName;
         this.fullName = fullName;
         this.password = password;
@@ -26,14 +22,6 @@ public class User {
         this.birthDay = birthDay;
         this.address = address;
         this.phone = phone;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public String getUserName() {
@@ -84,11 +72,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthDay() {
+    public String getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(Date birthDay) {
+    public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
 
@@ -110,6 +98,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userID=" + userID + ", userName=" + userName + ", fullName=" + fullName + ", password=" + password + ", roleID=" + roleID + ", imageURL=" + imageURL + ", email=" + email + ", birthDay=" + birthDay + ", address=" + address + ", phone=" + phone + '}';
+        return "User{ userName=" + userName + ", fullName=" + fullName + ", password=" + password + ", roleID=" + roleID + ", imageURL=" + imageURL + ", email=" + email + ", birthDay=" + birthDay + ", address=" + address + ", phone=" + phone + '}';
     }
 }

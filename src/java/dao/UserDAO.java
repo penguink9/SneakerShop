@@ -15,17 +15,16 @@ public class UserDAO extends DBContext{
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("UserID");
                 String userName = rs.getString("UserName");
                 String fullName = rs.getString("FullName");
                 String password = rs.getString("Password");
                 int roleID = rs.getInt("RoleID");
                 String imageURL = rs.getString("ImageURL");
                 String email = rs.getString("Email");
-                Date birthDay = rs.getDate("BirthDay");
+                String birthDay = rs.getString("BirthDay");
                 String address = rs.getString("Address");
                 String phone = rs.getString("Phone");
-                users.add(new User(id, userName, fullName, password, roleID, imageURL, email, birthDay, address, phone));
+                users.add(new User(userName, fullName, password, roleID, imageURL, email, birthDay, address, phone));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,16 +39,15 @@ public class UserDAO extends DBContext{
             preparedStatement.setString(1, userName);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("UserID");
                 String fullName = rs.getString("FullName");
                 String password = rs.getString("Password");
                 int roleID = rs.getInt("RoleID");
                 String imageURL = rs.getString("ImageURL");
                 String email = rs.getString("Email");
-                Date birthDay = rs.getDate("BirthDay");
+                String birthDay = rs.getString("BirthDay");
                 String address = rs.getString("Address");
                 String phone = rs.getString("Phone");
-                user = new User(id, userName, fullName, password, roleID, imageURL, email, birthDay, address, phone);
+                user = new User(userName, fullName, password, roleID, imageURL, email, birthDay, address, phone);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +64,7 @@ public class UserDAO extends DBContext{
             preparedStatement.setInt(4, user.getRoleID());
             preparedStatement.setString(5, user.getImageURL());
             preparedStatement.setString(6, user.getEmail());
-            preparedStatement.setDate(7, (Date) user.getBirthDay());
+            preparedStatement.setString(7, user.getBirthDay());
             preparedStatement.setString(8, user.getAddress());
             preparedStatement.setString(9, user.getPhone());
             preparedStatement.executeUpdate();
@@ -109,7 +107,7 @@ public class UserDAO extends DBContext{
             preparedStatement.setInt(3, user.getRoleID());
             preparedStatement.setString(4, user.getImageURL());
             preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setDate(6, (Date) user.getBirthDay());
+            preparedStatement.setString(6, user.getBirthDay());
             preparedStatement.setString(7, user.getAddress());
             preparedStatement.setString(8, user.getPhone());
             preparedStatement.setString(9, user.getUserName());
@@ -118,6 +116,42 @@ public class UserDAO extends DBContext{
             e.printStackTrace();
         }
         return rowUpdated;
+    }
+    public int getNumberUsers() {
+        try {
+            String sql = "SELECT COUNT(*) FROM Users";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int number = rs.getInt(1);
+                return number;
+            }
+        } catch (Exception e) {
+        }
+        return 1;
+    }
+    public boolean checkUserNameDuplicate(String username) {
+        String sql = "SELECT * FROM Users WHERE userName = ? and [status] = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                User u = new User(rs.getString("userName"),
+                        rs.getString("fullName"),
+                        rs.getString("password"),
+                        rs.getInt("roleID"),
+                        rs.getString("imageURL"),
+                        rs.getString("email"), 
+                        rs.getString("birthDay"),
+                        rs.getString("address"), 
+                        rs.getString("phone"));
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
     
     public static void main(String[] args) {
