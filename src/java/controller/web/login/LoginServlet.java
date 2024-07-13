@@ -1,9 +1,15 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller.web.login;
 
 
+import dao.CartDAO;
 import dao.UserDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -11,11 +17,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Cart;
 import model.User;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
     @Override
@@ -77,7 +83,16 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(r);
             response.addCookie(p);
             String image = user.getImageURL();
-
+            CartDAO cartDAO= new CartDAO();
+            Cart cart= cartDAO.getCartByUsername(uName);
+            if (cartDAO.getCartByUsername(uName)==null) {
+                cart= new Cart(uName);
+                cartDAO.addCart(cart);
+            }
+            else {
+                cart=cartDAO.getCartByUsername(uName);
+            }
+            session.setAttribute("cart", cart);
             session.setAttribute("imageUser", image);
             session.setAttribute("address", user.getAddress());
             session.setAttribute("name", user.getFullName());
@@ -96,6 +111,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

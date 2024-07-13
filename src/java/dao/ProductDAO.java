@@ -177,9 +177,7 @@ public class ProductDAO extends DBContext {
     }
     public List<Product> getRelatedProduct(int categoryID) {
         List<Product> list = new ArrayList<>();
-        String sql = "select top 4 * from product\r\n"
-        		+ "where [cateID] =?\r\n"
-        		+ "order by id desc";
+        String sql = "select top 4 * from [Products] where [CategoryID] =? order by [ProductID] desc";
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setInt(1, categoryID);
             ResultSet rs = statement.executeQuery();
@@ -227,7 +225,7 @@ public class ProductDAO extends DBContext {
     }
     public static void main(String[] args) {
         ProductDAO dao= new ProductDAO();
-        List<Product> list= dao.get12Last();
+        List<Product> list= dao.getRelatedProduct(4);
         for(Product p: list) {
             System.out.println(p);
         }

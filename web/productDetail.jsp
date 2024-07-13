@@ -64,7 +64,7 @@
             <div class="jumbotron color-grey-light mt-70">
                 <div class="d-flex align-items-center h-100">
                     <div class="container text-center py-5">
-                        <h3 class="mb-0"></h3>
+                        <h3 class="mb-0">Detail Product</h3>
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
 
                             <p class="pt-1">${product.description}</p>
 
-                            <form action="addCart?pid=${product.productID }" method="post">
+                            <form action="addtocart?pid=${product.productID }" method="post">
                                 <div class="table-responsive mb-2">
                                     <table class="table table-sm table-borderless">
                                         <tbody>
@@ -208,7 +208,6 @@
                                     </table>
                                 </div>
                                 <div class="mt-1">
-                                    <button type="submit" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
                                     <button type="submit" class="btn btn-light btn-md mr-1 mb-2"><i class="fas fa-shopping-cart pr-2"></i>Add to
                                         cart</button>
                                 </div>
@@ -226,7 +225,6 @@
 
                     <!-- Grid row -->
                     <div class="row">
-
                         <c:forEach items="${listRelatedProduct}" var="o">
                             <!-- Grid column -->
                             <div class="col-md-6 col-lg-3 mb-5">
@@ -238,7 +236,7 @@
                                         <img class="img-fluid w-100"
                                              src="${o.image }" alt="Sample">
                                         <h4 class="mb-0"><span class="badge badge-primary badge-pill badge-news">Sale 10%</span></h4>
-                                        <a href="detail?pid=${o.id}">
+                                        <a href="detail?pid=${o.productID}">
                                             <div class="mask">
                                                 <img class="img-fluid w-100"
                                                      src="${o.image }">
@@ -248,10 +246,8 @@
                                     </div>
 
                                     <div class="pt-4">
-
-                                        <h5>${o.title }</h5>
-                                        <p><span class="text-danger mr-1"><strong>${String.format("%.02f",o.price*0.9) }$</strong></span><span
-                                                class="text-grey"><strong><s>${o.price }$</s></strong></span></p>
+                                        <p><span class="text-danger mr-1"><strong>${String.format("%.0f",o.price*0.9) }VNĐ</strong></span><span
+                                                class="text-grey"><strong><s>${o.price }VNĐ</s></strong></span></p>
 
 
 

@@ -7,10 +7,10 @@ import java.util.List;
 import model.User;
 import context.DBContext;
 
-public class UserDAO extends DBContext{
+public class UserDAO extends DBContext {
 
     public List<User> getAllUsers() {
-        String sql="SELECT * FROM Users";
+        String sql = "SELECT * FROM Users";
         List<User> users = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -33,7 +33,7 @@ public class UserDAO extends DBContext{
     }
 
     public User getUserByUsername(String userName) {
-        String sql="SELECT * FROM Users WHERE UserName = ?";
+        String sql = "SELECT * FROM Users WHERE UserName = ?";
         User user = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, userName);
@@ -56,7 +56,7 @@ public class UserDAO extends DBContext{
     }
 
     public void addUser(User user) {
-        String sql="INSERT INTO Users (UserName, FullName, Password, RoleID, ImageURL, Email, BirthDay, Address, Phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Users (UserName, FullName, Password, RoleID, ImageURL, Email, BirthDay, Address, Phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getFullName());
@@ -74,7 +74,7 @@ public class UserDAO extends DBContext{
     }
 
     public boolean deleteUser(String userName) {
-        String sql="DELETE FROM Users WHERE UserName = ?;";
+        String sql = "DELETE FROM Users WHERE UserName = ?;";
         boolean rowDeleted = false;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, userName);
@@ -86,7 +86,7 @@ public class UserDAO extends DBContext{
     }
 
     public boolean checkUser(String userName, String password) {
-        String sql="SELECT * FROM Users WHERE UserName = ? AND Password = ?";
+        String sql = "SELECT * FROM Users WHERE UserName = ? AND Password = ?";
         boolean userExists = false;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, userName);
@@ -98,25 +98,36 @@ public class UserDAO extends DBContext{
         }
         return userExists;
     }
-    public boolean updateUser(User user) {
-        String sql="UPDATE Users SET FullName = ?, Password = ?, RoleID = ?, ImageURL = ?, Email = ?, BirthDay = ?, Address = ?, Phone = ? WHERE UserName = ?";
-        boolean rowUpdated = false;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, user.getFullName());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getRoleID());
-            preparedStatement.setString(4, user.getImageURL());
-            preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setString(6, user.getBirthDay());
-            preparedStatement.setString(7, user.getAddress());
-            preparedStatement.setString(8, user.getPhone());
-            preparedStatement.setString(9, user.getUserName());
-            rowUpdated = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+    public void update(String name, String address, String phone, String email, String dob, String userName, String img) {
+        String sql = "UPDATE [dbo].[Users] SET \n";
+        if (name != null) {
+            sql += " [FullName] = " + "?";
         }
-        return rowUpdated;
+        if (address != null) {
+            sql += ", [Address] =" + "?";
+        }
+        sql += ", [Phone] =" + "?";
+        sql += ", [Email] =" + "?";
+        sql += ", [BirthDay] =" + "?";
+        sql += ", [ImageURL] =" + "?";
+        sql += " WHERE UserName = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, address);
+            st.setString(3, phone);
+            st.setString(4, email);
+            st.setString(5, dob);
+            st.setString(6, img);
+            st.setString(7, userName);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
+
     public int getNumberUsers() {
         try {
             String sql = "SELECT COUNT(*) FROM Users";
@@ -130,6 +141,7 @@ public class UserDAO extends DBContext{
         }
         return 1;
     }
+
     public boolean checkUserNameDuplicate(String username) {
         String sql = "SELECT * FROM Users WHERE userName = ? and [status] = 1";
         try {
@@ -142,9 +154,9 @@ public class UserDAO extends DBContext{
                         rs.getString("password"),
                         rs.getInt("roleID"),
                         rs.getString("imageURL"),
-                        rs.getString("email"), 
+                        rs.getString("email"),
                         rs.getString("birthDay"),
-                        rs.getString("address"), 
+                        rs.getString("address"),
                         rs.getString("phone"));
                 return true;
             }
@@ -153,11 +165,11 @@ public class UserDAO extends DBContext{
         }
         return false;
     }
-    
+
     public static void main(String[] args) {
-        UserDAO dao= new UserDAO();
-        List<User> list= dao.getAllUsers();
-        for(User u:list) {
+        UserDAO dao = new UserDAO();
+        List<User> list = dao.getAllUsers();
+        for (User u : list) {
             System.out.println(u);
         }
         System.out.println(dao.checkUser("minh123", "123789"));

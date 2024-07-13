@@ -101,7 +101,7 @@
                                 <h5>Categories</h5>
 
                                 <div class="text-muted small text-uppercase mb-5">
-                                    <c:forEach items="${listCategories}" var="o">
+                                    <c:forEach items="${sessionScope.listCategories}" var="o">
                                         <p class="mb-3"><a href="shop?cid=${o.categoryID}" class="card-link-secondary">${o.categoryName}</a></p>
                                         </c:forEach>
                                 </div>

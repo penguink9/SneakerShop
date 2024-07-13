@@ -28,13 +28,7 @@ public class DetailProductControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ProductDAO pDAO = new ProductDAO();
-        Product product= pDAO.getProductById(Integer.parseInt(request.getParameter("pid")));
-        List<Product> listRelatedProduct = pDAO.getRelatedProduct(product.getCategoryID());
         
-        request.setAttribute("product", product);
-        request.setAttribute("listRelatedProduct", listRelatedProduct);
-        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,7 +43,14 @@ public class DetailProductControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        ProductDAO pDAO = new ProductDAO();
+        Product product= pDAO.getProductById(Integer.parseInt(request.getParameter("pid")));
+        List<Product> listRelatedProduct = pDAO.getRelatedProduct(product.getCategoryID());
+        
+        request.setAttribute("product", product);
+        request.setAttribute("listRelatedProduct", listRelatedProduct);
+        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     }
 
     /**

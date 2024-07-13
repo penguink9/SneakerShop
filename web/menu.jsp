@@ -21,7 +21,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="shop?cid=${0}">Tất cả sản phẩm</a>
-                                <c:forEach items="${requestScope.listCategories}" var="o">
+                                <c:forEach items="${sessionScope.listCategories}" var="o">
                                     <a class="dropdown-item" href="shop?cid=${o.categoryID}" >${o.categoryName}</a>
                                 </c:forEach>
                             </div>
@@ -48,7 +48,7 @@
                 </c:if>
                 <c:if test="${sessionScope.account != null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="EditProfile.jsp">My Profile</a>
+                        <a class="nav-link" href="editProfile.jsp">My Profile</a>
                     </li>
                 </c:if>
                 <%--  <c:if test="${sessionScope.acc.isAdmin == 1}">
@@ -58,9 +58,9 @@
                  </c:if> --%>
             </ul>
 
-            <form action="search" method="post" class="form-inline my-2 my-lg-0">
+            <form action="viewcart" method="post" class="form-inline my-2 my-lg-0">
 
-                <a class="btn btn-success btn-sm ml-3" href="managerCart">
+                <a class="btn btn-success btn-sm ml-3" href="viewcart">
                     <i class="fa fa-shopping-cart"></i> <span style="font-size: 14px;">Cart</span>
                     <b><span id="amountCart" class="badge badge-light" style="color:black; font-size: 12px;">0</span></b>
 

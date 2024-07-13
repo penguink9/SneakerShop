@@ -35,7 +35,6 @@ public class ShopServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         ProductDAO pDAO = new ProductDAO();
-        CategoryDAO cDAO = new CategoryDAO();
         List<Product> listP = new ArrayList<>();
         if (request.getParameter("cid") != null) {
             session.setAttribute("cid", request.getParameter("cid"));
@@ -55,7 +54,6 @@ public class ShopServlet extends HttpServlet {
             listP = (List<Product>) session.getAttribute("searchList");
         }
         int indexPage = Integer.parseInt(index);
-        List<Category> listC = cDAO.getAllCategories();
         // Pagination logic
         int itemsPerPage = 6;
         int allProduct = listP.size();
@@ -74,7 +72,6 @@ public class ShopServlet extends HttpServlet {
         request.setAttribute("endPage", endPage);
         session.setAttribute("searched", false);
         session.setAttribute("listP", list);
-        request.setAttribute("listCategories", listC);
 
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }

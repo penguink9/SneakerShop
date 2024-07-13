@@ -50,14 +50,14 @@
             }
 
             .carousel-item:nth-child(2) {
-                background-image: url('https://file.hstatic.net/1000230642/file/web-top-banner_68b9a0c957374772bdf25d1d0f312b11_master.jpg');
+                background-image: url('images/banner2.jpg');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 background-position: center center;
             }
 
             .carousel-item:nth-child(3) {
-                background-image: url('https://file.hstatic.net/1000230642/file/banner_central_opt_2_76f1c057c7dc43ee9c8a36c6bee9ac4d_master.jpg');
+                background-image: url('images/banner_adidas.jpg');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 background-position: center center;

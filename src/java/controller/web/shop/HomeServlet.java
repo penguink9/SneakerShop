@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import model.Category;
@@ -22,7 +23,8 @@ public class HomeServlet extends HttpServlet {
         List<Category> listC = catDAO.getAllCategories();
         List<Product> list12Last = pDAO.get12Last();
         List<Product> bestSellings = pDAO.getTop4BestSelling();
-        request.setAttribute("listCategories", listC);
+        HttpSession session= request.getSession();
+        session.setAttribute("listCategories", listC);
         request.setAttribute("bestSellings", bestSellings);
         request.setAttribute("list12Last", list12Last);
         request.getRequestDispatcher("home.jsp").forward(request, response);

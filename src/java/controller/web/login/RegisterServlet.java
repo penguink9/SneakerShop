@@ -80,43 +80,38 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
-    String fName = request.getParameter("name");
-    String uName = request.getParameter("username");
-    String uPass = request.getParameter("password");
-    String uPho = request.getParameter("phone");
-    String uEmail = request.getParameter("email");
-    String birthDateString = request.getParameter("dob");
-
-    UserDAO ud = new UserDAO();
-    User user;
-    String message = "Something wrong";
-    int slUPrev = ud.getNumberUsers();
-    boolean isDup = ud.checkUserNameDuplicate(uName);
-
-    if (isDup) {
-        message = "Username already exists!";
-        request.setAttribute("error", message);
-        request.getRequestDispatcher("register.jsp").forward(request, response);
-    } else {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adjust the date format according to your input format
-            Date birthDate = dateFormat.parse(birthDateString);
-
-            user = new User(uName, fName, uPass, 1, "", uEmail, dateFormat.format(birthDate), "", uPho);
+        String fName = request.getParameter("name");
+        String uName = request.getParameter("username");
+        String uPass = request.getParameter("password");
+        String uPho = request.getParameter("phone");
+        String uEmail = request.getParameter("email");
+        String birthDate = request.getParameter("dob");
+        String uAddress = request.getParameter("address");
+        UserDAO ud = new UserDAO();
+        
+        User user;
+       
+        String message = "Something wrong";
+        int slUPrev = ud.getNumberUsers();
+        
+        boolean isDup = ud.checkUserNameDuplicate(uName);
+        if (isDup == true) {
+            message = "Username already exist!";
+            request.setAttribute("error", message);
+            request.getRequestDispatcher("register.jsp").forward(request, response);
+        } else {
+            user = new User(uName, fName, uPass, 1, "", uEmail, birthDate, uAddress, uPho);
             ud.addUser(user);
+          
             int slUAfter = ud.getNumberUsers();
+            
 
-            if (slUAfter > slUPrev) {
+            if (slUAfter > slUPrev ){
                 message = "Register successfully. Please Login!";
             }
             request.setAttribute("successfully", message);
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        } catch (ParseException e) {
-            message = "Invalid date format!";
-            request.setAttribute("error", message);
-            request.getRequestDispatcher("register.jsp").forward(request, response);
         }
-    }
 }
 
     /**
