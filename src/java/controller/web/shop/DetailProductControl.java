@@ -4,22 +4,17 @@
  */
 package controller.web.shop;
 
-import dao.CategoryDAO;
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import model.Category;
 import model.Product;
-
-@WebServlet(name = "ShopServlet", urlPatterns = {"/shop"})
-public class ShopServlet extends HttpServlet {
+@WebServlet(name = "DetailProductControl", urlPatterns = {"/detail"})
+public class DetailProductControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,50 +28,13 @@ public class ShopServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
         ProductDAO pDAO = new ProductDAO();
-        CategoryDAO cDAO = new CategoryDAO();
-        List<Product> listP = new ArrayList<>();
-        if (request.getParameter("cid") != null) {
-            session.setAttribute("cid", request.getParameter("cid"));
-        }
-        int cid = Integer.parseInt((String) session.getAttribute("cid"));
-        if (cid == 0) {
-            listP = pDAO.getAllProducts();
-        } else {
-            listP = pDAO.getProductsByCategoryid(cid);
-        }
-        String index = request.getParameter("index");
-        if (index == null) {
-            index = "1";
-        }
-        if (session.getAttribute("searched")!=null) {
-            if((Boolean)session.getAttribute("searched"))
-            listP = (List<Product>) session.getAttribute("searchList");
-        }
-        int indexPage = Integer.parseInt(index);
-        List<Category> listC = cDAO.getAllCategories();
-        // Pagination logic
-        int itemsPerPage = 6;
-        int allProduct = listP.size();
-        int endPage = allProduct / itemsPerPage;
-        if (allProduct % itemsPerPage != 0) {
-            endPage++;
-        }
-        int start = (indexPage - 1) * itemsPerPage;
-        int end = Math.min(start + itemsPerPage, allProduct);
-
-        List<Product> list = new ArrayList<>();
-        for (int i = start; i < end; i++) {
-            list.add(listP.get(i));
-        }
-        request.setAttribute("tag", indexPage);
-        request.setAttribute("endPage", endPage);
-        session.setAttribute("searched", false);
-        session.setAttribute("listP", list);
-        request.setAttribute("listCategories", listC);
-
-        request.getRequestDispatcher("shop.jsp").forward(request, response);
+        Product product= pDAO.getProductById(Integer.parseInt(request.getParameter("pid")));
+        List<Product> listRelatedProduct = pDAO.getRelatedProduct(product.getCategoryID());
+        
+        request.setAttribute("product", product);
+        request.setAttribute("listRelatedProduct", listRelatedProduct);
+        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

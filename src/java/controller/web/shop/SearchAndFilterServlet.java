@@ -4,7 +4,6 @@
  */
 package controller.web.shop;
 
-import dao.CategoryDAO;
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,68 +14,64 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Category;
+import java.util.stream.Collectors;
 import model.Product;
-
-@WebServlet(name = "ShopServlet", urlPatterns = {"/shop"})
-public class ShopServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+@WebServlet(name = "SearchAndFilterServlet", urlPatterns = {"/search"})
+public class SearchAndFilterServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+         response.setContentType("text/html;charset=UTF-8");
+
         HttpSession session = request.getSession();
         ProductDAO pDAO = new ProductDAO();
-        CategoryDAO cDAO = new CategoryDAO();
-        List<Product> listP = new ArrayList<>();
-        if (request.getParameter("cid") != null) {
-            session.setAttribute("cid", request.getParameter("cid"));
-        }
-        int cid = Integer.parseInt((String) session.getAttribute("cid"));
-        if (cid == 0) {
+        List<Product> listP = pDAO.getAllProducts();
+
+        // Fetch all products if listP is not already set
+        if (listP == null) {
             listP = pDAO.getAllProducts();
-        } else {
-            listP = pDAO.getProductsByCategoryid(cid);
         }
-        String index = request.getParameter("index");
-        if (index == null) {
-            index = "1";
-        }
-        if (session.getAttribute("searched")!=null) {
-            if((Boolean)session.getAttribute("searched"))
-            listP = (List<Product>) session.getAttribute("searchList");
-        }
-        int indexPage = Integer.parseInt(index);
-        List<Category> listC = cDAO.getAllCategories();
-        // Pagination logic
-        int itemsPerPage = 6;
-        int allProduct = listP.size();
-        int endPage = allProduct / itemsPerPage;
-        if (allProduct % itemsPerPage != 0) {
-            endPage++;
-        }
-        int start = (indexPage - 1) * itemsPerPage;
-        int end = Math.min(start + itemsPerPage, allProduct);
 
-        List<Product> list = new ArrayList<>();
-        for (int i = start; i < end; i++) {
-            list.add(listP.get(i));
-        }
-        request.setAttribute("tag", indexPage);
-        request.setAttribute("endPage", endPage);
-        session.setAttribute("searched", false);
-        session.setAttribute("listP", list);
-        request.setAttribute("listCategories", listC);
+        // Get search and filter parameters
+        String searchQuery = request.getParameter("txt");
+        String priceRange = request.getParameter("materialExampleRadios");
 
-        request.getRequestDispatcher("shop.jsp").forward(request, response);
+        // Apply search filter
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            listP = listP.stream()
+                    .filter(product -> product.getProductName().toLowerCase().contains(searchQuery.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        // Apply price filter
+        if (priceRange != null && !priceRange.isEmpty()) {
+            switch (priceRange) {
+                case "under1tr":
+                    listP = listP.stream()
+                            .filter(product -> product.getPrice() < 1000000)
+                            .collect(Collectors.toList());
+                    break;
+                case "1tr2tr":
+                    listP = listP.stream()
+                            .filter(product -> product.getPrice() >= 1000000 && product.getPrice() <= 2000000)
+                            .collect(Collectors.toList());
+                    break;
+                case "2trabove":
+                    listP = listP.stream()
+                            .filter(product -> product.getPrice() > 2000000)
+                            .collect(Collectors.toList());
+                    break;
+            }
+        }
+
+        // Update session attribute
+        session.setAttribute("searched", true);
+        session.setAttribute("searchList", listP);
+        // Set search and filter parameters as request attributes
+        request.setAttribute("txtS", searchQuery);
+        request.setAttribute("selectedPriceRange", priceRange);
+
+        // Forward to the shop.jsp page
+        request.getRequestDispatcher("shop").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

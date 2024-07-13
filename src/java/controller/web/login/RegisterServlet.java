@@ -102,7 +102,7 @@ public class RegisterServlet extends HttpServlet {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adjust the date format according to your input format
             Date birthDate = dateFormat.parse(birthDateString);
 
-            user = new User(uName, fName, uPass, 2, "", uEmail, dateFormat.format(birthDate), "", uPho);
+            user = new User(uName, fName, uPass, 1, "", uEmail, dateFormat.format(birthDate), "", uPho);
             ud.addUser(user);
             int slUAfter = ud.getNumberUsers();
 

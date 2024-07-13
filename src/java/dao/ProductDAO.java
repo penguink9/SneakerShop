@@ -152,6 +152,13 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
+    public List<Product> getListByPage(List<Product> list, int start, int end) {
+        ArrayList<Product> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
     
     public List<Product> getTop4BestSelling() {
         List<Product> listProduct = new ArrayList<>();
@@ -167,6 +174,21 @@ public class ProductDAO extends DBContext {
             System.out.println(e.getMessage());
         }
         return listProduct;
+    }
+    public List<Product> getRelatedProduct(int categoryID) {
+        List<Product> list = new ArrayList<>();
+        String sql = "select top 4 * from product\r\n"
+        		+ "where [cateID] =?\r\n"
+        		+ "order by id desc";
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(1, categoryID);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(extractProductFromResultSet(rs));
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
 
     private Product extractProductFromResultSet(ResultSet rs) throws SQLException {

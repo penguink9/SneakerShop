@@ -20,8 +20,8 @@
                                 Shop
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="shop?cid=0">Tất cả sản phẩm</a>
-                                <c:forEach items="${listCategories}" var="o">
+                                <a class="dropdown-item" href="shop?cid=${0}">Tất cả sản phẩm</a>
+                                <c:forEach items="${requestScope.listCategories}" var="o">
                                     <a class="dropdown-item" href="shop?cid=${o.categoryID}" >${o.categoryName}</a>
                                 </c:forEach>
                             </div>

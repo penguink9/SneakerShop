@@ -160,5 +160,6 @@ public class UserDAO extends DBContext{
         for(User u:list) {
             System.out.println(u);
         }
+        System.out.println(dao.checkUser("minh123", "123789"));
     }
 }
