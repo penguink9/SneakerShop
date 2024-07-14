@@ -4,14 +4,20 @@ public class Item {
     private Product product;
     private int quantity;
     private double price;
+    private String size;
 
-    public Item(Product product, int quantity) {
+    public Item(Product product, int quantity, String size) {
         this.product = product;
         this.quantity = quantity;
         this.price = product.getPrice();
+        this.size = size;
     }
 
     public Item() {
+    }
+
+    public String getSize() {
+        return size;
     }
 
     public Product getProduct() {

@@ -1,23 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-package controller.web.shop;
 
+package controller.admin;
+
+import dao.OrderDAO;
+import dao.ProductDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-
-/**
- *
- * @author Techcare
- */
-@WebServlet(name = "AddToCartControl", urlPatterns = {"/addtocart"})
-public class AddToCartControl extends HttpServlet {
+import model.Product;
+import model.User;
+@WebServlet(name = "StatisticControl", urlPatterns = {"/statistic"})
+public class StatisticControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,18 +27,26 @@ public class AddToCartControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddCartControl</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddCartControl at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        ProductDAO pDAO= new ProductDAO();
+        int numberProducts= pDAO.getAllProducts().size();
+        OrderDAO oDAO= new OrderDAO();
+        double totalSales = oDAO.sumAllOrders();
+        int numberSneakersSold=oDAO.numberSneakersSold();
+        UserDAO uDAO= new UserDAO();
+        int numberUsers= uDAO.getNumberUsers();
+        int numberNikeSold=oDAO.numberSneakersSoldByCategory(1);
+        int numberAdidasSold=oDAO.numberSneakersSoldByCategory(2);;
+        int numberPumaSold=oDAO.numberSneakersSoldByCategory(3);;
+        int numberNBSold=oDAO.numberSneakersSoldByCategory(4);;
+        request.setAttribute("numberProducts", numberProducts);
+        request.setAttribute("totalSales", totalSales);
+        request.setAttribute("numberSneakersSold", numberSneakersSold);
+        request.setAttribute("numberUsers", numberUsers);
+        request.setAttribute("numberNikeSold", numberNikeSold);
+        request.setAttribute("numberAdidasSold", numberAdidasSold);
+        request.setAttribute("numberPumaSold", numberPumaSold);
+        request.setAttribute("numberNBSold", numberNBSold);
+        request.getRequestDispatcher("admin/statistic.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

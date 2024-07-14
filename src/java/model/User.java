@@ -1,6 +1,8 @@
 
 package model;
 
+import dao.OrderDAO;
+
 public class User {
     private String userName;
     private String fullName;
@@ -95,7 +97,10 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+    public double totalSpend() {
+        OrderDAO oDAO= new OrderDAO();
+        return oDAO.getTotalSpendByUserName(userName);
+    }
     @Override
     public String toString() {
         return "User{ userName=" + userName + ", fullName=" + fullName + ", password=" + password + ", roleID=" + roleID + ", imageURL=" + imageURL + ", email=" + email + ", birthDay=" + birthDay + ", address=" + address + ", phone=" + phone + '}';

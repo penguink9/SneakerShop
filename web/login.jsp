@@ -5,6 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--        <title>Register Page</title>-->
+        <title>Login</title>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -32,7 +33,7 @@
         Material Design Bootstrap Ecommerce
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css"> 
         <!-- Your custom styles (optional) -->
-        <title>Login</title>
+
         <style>
             .navbar .nav-link {
                 color: #fff !important;
@@ -121,5 +122,6 @@
                 <div class="error"><c:out value="${error}" /></div>
             </c:if>
         </div>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

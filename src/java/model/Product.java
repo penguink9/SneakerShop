@@ -1,5 +1,9 @@
 
 package model;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class Product {
     private int productID;
     private String productName;
@@ -145,6 +149,13 @@ public class Product {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public boolean isSizeAvailable(String requestedSize) {
+        if (this.size == null || this.size.isEmpty()) {
+            return false;
+        }
+        List<String> availableSizes = Arrays.asList(this.size.split(","));
+        return availableSizes.contains(requestedSize);
     }
 
     @Override

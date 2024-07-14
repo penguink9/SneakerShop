@@ -5,7 +5,6 @@
  */
 package controller.web.login;
 
-
 import dao.CartDAO;
 import dao.UserDAO;
 import java.io.IOException;
@@ -19,29 +18,33 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Cart;
 import model.User;
+
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
-protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Cookie arr[] = request.getCookies();
+        Cookie[] arr = request.getCookies();
         if (arr != null) {
-            for (int i = 0; i < arr.length; i++) {
-                if (arr[i].getName().equals("cUName")) {
-                    request.setAttribute("uName", arr[i].getValue());
+            for (Cookie cookie : arr) {
+                if (cookie.getName().equals("cUName")) {
+                    request.setAttribute("uName", cookie.getValue());
                 }
-                if (arr[i].getName().equals("pUName")) {
-                    request.setAttribute("uPass", arr[i].getValue());
+                if (cookie.getName().equals("pUName")) {
+                    request.setAttribute("uPass", cookie.getValue());
                 }
-                if (arr[i].getName().equals("reMem")) {
-                    request.setAttribute("reMem", arr[i].getValue());
+                if (cookie.getName().equals("reMem")) {
+                    request.setAttribute("reMem", cookie.getValue());
                 }
             }
         }
         request.getRequestDispatcher("login.jsp").forward(request, response);
+
     }
 
     /**
@@ -64,34 +67,37 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         if (!ud.checkUser(uName, uPass)) {
             request.setAttribute("error", "Username or password invalid!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else { 
-            User user=ud.getUserByUsername(uName);
+        } else {
+            User user = ud.getUserByUsername(uName);
             session.setAttribute("account", user);
+
             Cookie u = new Cookie("cUName", uName);
             Cookie p = new Cookie("pUName", uPass);
-            Cookie r = new Cookie("reMem", remember);
-            u.setMaxAge(60 * 60 * 24 * 30 * 3);
-            if (remember != null) {
-                p.setMaxAge(60 * 60 * 24 * 30 * 3);
-                r.setMaxAge(60 * 60 * 24 * 30 * 3);
-            } else {
-                p.setMaxAge(0);
-                r.setMaxAge(0);
-            }
+            Cookie r = new Cookie("reMem", remember != null ? "true" : "false");
+
+            int maxAge = remember != null ? 60 * 60 * 24 * 30 * 3 : 0;
+            u.setMaxAge(maxAge);
+            p.setMaxAge(maxAge);
+            r.setMaxAge(maxAge);
 
             response.addCookie(u);
-            response.addCookie(r);
             response.addCookie(p);
+            response.addCookie(r);
             String image = user.getImageURL();
-            CartDAO cartDAO= new CartDAO();
-            Cart cart= cartDAO.getCartByUsername(uName);
-            if (cartDAO.getCartByUsername(uName)==null) {
-                cart= new Cart(uName);
+            CartDAO cartDAO = new CartDAO();
+            Cart cart = cartDAO.getCartByUsername(uName);
+            if (cartDAO.getCartByUsername(uName) == null) {
+                cart = new Cart(uName);
                 cartDAO.addCart(cart);
+            } else {
+                cart = cartDAO.getCartByUsername(uName);
             }
-            else {
-                cart=cartDAO.getCartByUsername(uName);
+            if (user.getRoleID() == 0) {
+                session.setAttribute("role", "admin");
+            } else {
+                session.setAttribute("role", "user");
             }
+            session.setAttribute("account", user);
             session.setAttribute("cart", cart);
             session.setAttribute("imageUser", image);
             session.setAttribute("address", user.getAddress());

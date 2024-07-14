@@ -8,6 +8,7 @@ import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,10 @@ import model.User;
  * @author Techcare
  */
 @WebServlet(name = "EditProfileControl", urlPatterns = {"/editProfile"})
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class EditProfileControl extends HttpServlet {
 
     /**
@@ -36,19 +41,25 @@ public class EditProfileControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditProfile</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditProfile at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        UserDAO u = new UserDAO();
+        String img = (String) session.getAttribute("imageUser");
+        if (!doUploadFile(request).isEmpty()) {
+            img = doUploadFile(request);
         }
+        String name = request.getParameter("name");
+        String username = request.getParameter("username");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String birthdate = request.getParameter("birthday");
+        u.update(name, address, phone, email, birthdate, username, img);
+
+        User account = u.getUserByUsername(username);
+
+        request.setAttribute("acceptUpdate", 1);
+        session.setAttribute("account", account);
+        request.getRequestDispatcher("viewProfile").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,29 +88,7 @@ public class EditProfileControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        UserDAO u = new UserDAO();
-        String img = doUploadFile(request);
-        String name = request.getParameter("name");
-        String username = request.getParameter("username");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String birthdate = request.getParameter("birthday");
-        HttpSession session = request.getSession();
-        u.update(name, address, phone, email, birthdate, username,img);
-
-        User account = u.getUserByUsername(username);
-
-        request.setAttribute("acceptUpdate", 1);
-        session.setAttribute("name", account.getFullName());
-        session.setAttribute("address", account.getAddress());
-        session.setAttribute("phone", account.getPhone());
-        session.setAttribute("email", account.getEmail());
-        session.setAttribute("imageUser", account.getImageURL());
-        session.setAttribute("birthdate", account.getBirthDay());
-        request.getRequestDispatcher("editProfile.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -111,8 +100,9 @@ public class EditProfileControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-private String doUploadFile(HttpServletRequest request){
-        
+
+    private String doUploadFile(HttpServletRequest request) {
+
         // upload file
         String img = "";
         try {
@@ -120,11 +110,14 @@ private String doUploadFile(HttpServletRequest request){
             String realPart = request.getServletContext().getRealPath("images/");
             String fileName = Path.of(part.getSubmittedFileName()).getFileName().toString();
             if (!Files.exists(Path.of(realPart))) {
-                Files.createDirectories(Path.of(realPart));              
+                Files.createDirectories(Path.of(realPart));
             }
-            img = "../images/" + fileName;
+            if (!fileName.isEmpty()) {
+                img = "images/" + fileName;
+            }
             part.write(realPart + "/" + fileName);
-        }catch (Exception e) {
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return img;
     }

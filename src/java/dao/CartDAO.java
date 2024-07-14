@@ -1,12 +1,10 @@
 package dao;
 
 import context.DBContext;
-import java.beans.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import model.Cart;
 import model.Item;
@@ -33,11 +31,12 @@ public class CartDAO extends DBContext {
                     while (itemRs.next()) {
                         int productID = itemRs.getInt("ProductID");
                         float quantity = itemRs.getFloat("Quantity");
+                        String size = itemRs.getString("Size");
 
                         ProductDAO productDAO = new ProductDAO();
                         Product product = productDAO.getProductById(productID);
 
-                        Item item = new Item(product, (int) quantity);
+                        Item item = new Item(product, (int) quantity, size);
                         items.add(item);
                     }
                     cart.setListItems(items);
@@ -55,7 +54,7 @@ public class CartDAO extends DBContext {
         try {
             // Add to Cart table
             String sql1 = "INSERT INTO Cart (UserName) VALUES (?)";
-            PreparedStatement st1 = connection.prepareStatement(sql1);
+            PreparedStatement st1 = connection.prepareStatement(sql1, PreparedStatement.RETURN_GENERATED_KEYS);
             st1.setString(1, cart.getUsername());
             st1.executeUpdate();
             ResultSet generatedKeys = st1.getGeneratedKeys();
@@ -65,12 +64,13 @@ public class CartDAO extends DBContext {
             }
 
             // Add to CartItem table
-            String sql2 = "INSERT INTO CartItem (CartID, ProductID, Quantity) VALUES (?, ?, ?)";
+            String sql2 = "INSERT INTO CartItem (CartID, ProductID, Quantity, Size) VALUES (?, ?, ?, ?)";
             for (Item item : cart.getListItems()) {
                 PreparedStatement st2 = connection.prepareStatement(sql2);
                 st2.setInt(1, cartID);
                 st2.setInt(2, item.getProduct().getProductID());
                 st2.setFloat(3, item.getQuantity());
+                st2.setString(4, item.getSize());
                 st2.executeUpdate();
             }
         } catch (SQLException e) {
@@ -96,11 +96,12 @@ public class CartDAO extends DBContext {
                     while (itemRs.next()) {
                         int productID = itemRs.getInt("ProductID");
                         float quantity = itemRs.getFloat("Quantity");
+                        String size = itemRs.getString("Size");
 
                         ProductDAO productDAO = new ProductDAO();
                         Product product = productDAO.getProductById(productID);
 
-                        Item item = new Item(product, (int) quantity);
+                        Item item = new Item(product, (int) quantity, size);
                         items.add(item);
                     }
                     cart.setListItems(items);
@@ -139,12 +140,13 @@ public class CartDAO extends DBContext {
             }
 
             // Insert new items into the cart
-            String insertItemSql = "INSERT INTO CartItem (CartID, ProductID, Quantity) VALUES (?, ?, ?)";
+            String insertItemSql = "INSERT INTO CartItem (CartID, ProductID, Quantity, Size) VALUES (?, ?, ?, ?)";
             try (PreparedStatement insertItemStmt = connection.prepareStatement(insertItemSql)) {
                 for (Item item : items) {
                     insertItemStmt.setInt(1, cartID);
                     insertItemStmt.setInt(2, item.getProduct().getProductID());
                     insertItemStmt.setFloat(3, item.getQuantity());
+                    insertItemStmt.setString(4, item.getSize());
                     insertItemStmt.addBatch();
                 }
                 insertItemStmt.executeBatch();
@@ -153,5 +155,41 @@ public class CartDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    public void deleteCartByUserName(String username) {
+        String sqlCartID = "SELECT CartID FROM Cart WHERE UserName = ?";
+        String sqlDeleteItems = "DELETE FROM CartItem WHERE CartID = ?";
+        String sqlDeleteCart = "DELETE FROM Cart WHERE UserName = ?";
 
+        try (PreparedStatement psCartID = connection.prepareStatement(sqlCartID)) {
+            psCartID.setString(1, username);
+            ResultSet rs = psCartID.executeQuery();
+
+            if (rs.next()) {
+                int cartID = rs.getInt("CartID");
+
+                try (PreparedStatement psDeleteItems = connection.prepareStatement(sqlDeleteItems)) {
+                    psDeleteItems.setInt(1, cartID);
+                    psDeleteItems.executeUpdate();
+                }
+
+                try (PreparedStatement psDeleteCart = connection.prepareStatement(sqlDeleteCart)) {
+                    psDeleteCart.setString(1, username);
+                    psDeleteCart.executeUpdate();
+                }
+            } else {
+                throw new SQLException("Cart does not exist for the user: " + username);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        CartDAO dao = new CartDAO();
+        dao.deleteCartByUserName("penguin");
+        Cart cart = dao.getCartByUsername("penguin");
+        for (Item item : cart.getListItems()) {
+            System.out.println(item);
+        }
+    }
 }

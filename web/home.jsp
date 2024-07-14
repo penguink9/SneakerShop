@@ -22,14 +22,10 @@
         <link rel="stylesheet" href="css/style.css" />
 
         <!-- Roboto Font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> 
-        Font Awesome
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-        Bootstrap core CSS
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
-        Material Design Bootstrap
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
-        Material Design Bootstrap Ecommerce
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css"> 
         <!-- Your custom styles (optional) -->
 
@@ -50,14 +46,14 @@
             }
 
             .carousel-item:nth-child(2) {
-                background-image: url('images/banner2.jpg');
+                background-image: url('images/banner2.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 background-position: center center;
             }
 
             .carousel-item:nth-child(3) {
-                background-image: url('images/banner_adidas.jpg');
+                background-image: url('images/banner3.jpg');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 background-position: center center;
@@ -135,11 +131,11 @@
 
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-title text-center"><a href="detail?pid=${o.productID}" title="View Product">${o.productName}</a></h4>
+                                        <h4 class="card-title text-center show_txt"><a href="detail?pid=${o.productID}" title="View Product">${o.productName}</a></h4>
 
                                         <div class="row">
                                             <div class="col">
-                                                <p class="btn btn-success btn-block">${o.price} VND</p>
+                                                <p class="btn btn-success btn-block">${String.format("%.0f",o.price)} VND</p>
                                             </div> 
                                         </div>
                                     </div>
@@ -152,20 +148,20 @@
             <div class="row" style="margin-top:25px">            
                 <h1 style="text-align:center; width:100%" id="newest">SẢN PHẨM MỚI NHẤT</h1>
                 <div class="col-sm-12">
-                    <div id="contentmoinhat" class="row">
+                    <div id="contentmoinhat" class="row" >
                         <c:forEach items="${list12Last}" var="o">
-                            <div class=" col-12 col-md-6 col-lg-3">
+                            <div class=" col-12 col-md-6 col-lg-3" style="padding-bottom: 5px">
                                 <div class="card">
                                     <div class="view zoom z-depth-2 rounded">
                                         <img class="img-fluid w-100" src="${o.image}" alt="Card image cap">
 
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="card-title text-center"><a href="detail?pid=${o.productID}" title="View Product">${o.productName}</a></h4>
+                                        <h4 class="card-title text-center show_txt"><a href="detail?pid=${o.productID}" title="View Product">${o.productName}</a></h4>
 
                                         <div class="row">
                                             <div class="col">
-                                                <p class="btn btn-success btn-block">${o.price} VND</p>
+                                                <p class="btn btn-success btn-block">${String.format("%.0f",o.price)} VND</p>
                                             </div> 
                                         </div>
                                     </div>
@@ -185,11 +181,16 @@
                         <div class=" col-12 col-md-12 col-lg-6">
                             <div class="card-body">
                                 <h4 class="card-title show_txt" style="text-align:center; font-size:18pt; color:#b57b00;">Về chúng tôi</h4>
-                                <h2 class="card-title show_txt" style="text-align:center; font-size:24pt;">Sneaker Shop</h2>
-                                <p style="text-align:center;">Website Shop Sneaker được tạo ra bởi Group 6 Class SE18B06 FPTU Da Nang</p>
-                                <p>Bạn đang cần tìm một đôi giày thể thao sneaker đẹp và hợp thời trang và đang hot Trends 
-                                    đến từ các thương hiệu lớn nhưng lại không đủ hầu bao để sắm được hàng chính hãng? 
-                                    Hãy đến với chúng tôi</p>                  
+                                <h2 class="card-title show_txt" style="text-align:center; font-size:24pt;">Sneaker King</h2>
+                                <p style="text-align:center;">Website Sneaker King được tạo ra bởi Group 6 Class SE18B06 PRJ301 FPTU Da Nang</p>
+                                <p style="text-align:center;">Group Members:</p>
+                                <p style="text-align:center;">Nguyễn Trường Giang</p>
+                                <p style="text-align:center;">Trần Chí Minh</p>
+                                <p style="text-align:center;">Trương Tuấn Kiệt</p>
+                                <p style="text-align:center;">Nguyễn Văn Duy Thắng</p>
+                                <p>Bạn đang cần tìm một đôi Sneaker đẹp và hợp thời trang và đang hot Trends 
+                                    đến từ các thương hiệu lớn? 
+                                    Hãy đến với chúng tôi, Vua Sneaker! </p>                  
                             </div>  
                         </div>
                         <div class=" col-12 col-md-12 col-lg-6">

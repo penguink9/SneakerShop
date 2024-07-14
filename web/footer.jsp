@@ -7,9 +7,11 @@
                 <h5>Giày</h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
-                    <li><a href="#bestSelling">Best Sellings</a></li>
-                    <li><a href="#newest">Sản Phẩm Mới nhất</a></li>
-                    <li><a href="#tatCa">Tất cả</a></li>
+                    <li><a href="shop?cid=1">Nike</a></li>
+                    <li><a href="shop?cid=2">Adidas</a></li>
+                    <li><a href="shop?cid=3">Puma</a></li>
+                    <li><a href="shop?cid=4">New Balance</a></li>
+                    <li><a href="shop?cid=0">All</a></li>
                 </ul>
             </div>
 
@@ -29,7 +31,7 @@
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
                     <li><i class="fa fa-home mr-2"></i>FPT University Da Nang</li>
-                    <li><i class="fa fa-envelope mr-2"></i>sneakershop@gmail.com</li>
+                    <li><i class="fa fa-envelope mr-2"></i>sneakerking@gmail.com</li>
                     <li><i class="fa fa-phone mr-2"></i>0961623771</li>
                     <li><i class="fa fa-print mr-2"></i>0961623771</li>
                 </ul>

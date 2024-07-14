@@ -111,14 +111,14 @@
 
                             <!-- Section: Filters -->
                             <section>
-                                <form class="filters" action="search" method="get">
+                                <form class="filters" action="search" method="post">
 
                                     <h5 class="pt-2 mb-4">Filters</h5>
 
                                     <section class="mb-4">
 
                                         <div class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
-                                            <input value="${txtS}" name="txt" type="text" class="form-control mb-0" placeholder="Search...">
+                                            <input value="${sessionScope.txtS}" name="txt" type="text" class="form-control mb-0" placeholder="Search...">
                                             <input type="submit" class="btn btn-flat btn-md px-3 waves-effect" value="Search">
                                             <i class="fas fa-search fa-lg"></i>
                                         </div>
@@ -129,26 +129,27 @@
                                     <section class="mb-4">
                                         <h6 class="font-weight-bold mb-3">Price</h6>
                                         <div class="form-check pl-0 mb-3">
-                                            <input type="radio" class="form-check-input" id="under100" name="materialExampleRadios" value="under100" 
-                                                   <c:if test="${selectedPriceRange == 'under100'}">checked</c:if>>
+                                            <input type="radio" class="form-check-input" id="under100" name="priceRange" value="under1tr" 
+                                                   <c:if test="${sessionScope.selectedPriceRange == 'under1tr'}">checked</c:if>>
                                                    <label class="form-check-label small text-uppercase card-link-secondary" for="under100">Under 1,000,000VNĐ</label>
                                             </div>
                                             <div class="form-check pl-0 mb-3">
-                                                <input type="radio" class="form-check-input" id="100200" name="materialExampleRadios" value="100200" 
-                                                <c:if test="${selectedPriceRange == '100200'}">checked</c:if>>
+                                                <input type="radio" class="form-check-input" id="100200" name="priceRange" value="1tr2tr" 
+                                                <c:if test="${sessionScope.selectedPriceRange == '1tr2tr'}">checked</c:if>>
                                                 <label class="form-check-label small text-uppercase card-link-secondary" for="100200">1,000,000VNĐ to 2,000,000VNĐ</label>
                                             </div>
                                             <div class="form-check pl-0 mb-3">
-                                                <input type="radio" class="form-check-input" id="200above" name="materialExampleRadios" value="200above" 
-                                                <c:if test="${selectedPriceRange == '200above'}">checked</c:if>>
+                                                <input type="radio" class="form-check-input" id="200above" name="priceRange" value="2trabove" 
+                                                <c:if test="${sessionScope.selectedPriceRange == '2trabove'}">checked</c:if>>
                                                 <label class="form-check-label small text-uppercase card-link-secondary" for="200above">2,000,000VNĐ & Above</label>
                                             </div>
                                             <!-- Clear button -->
-                                            <div class="form-check pl-0 mb-3">
-                                                <button type="button" class="btn btn-secondary" onclick="clearPriceFilter()">Clear</button>
-                                            </div>
+
                                         </section>
                                         <!-- Section: Price -->
+                                    </form>
+                                    <form class="form-check pl-0 mb-3" action="search" method="get">
+                                        <button type="submit" class="btn btn-secondary" >Clear</button>
                                     </form>
                                 </section>
 
@@ -226,8 +227,8 @@
 
                                             <div class="text-center pt-4">
 
-                                                <h5>${o.productName }</h5>
-                                                <p><span class="mr-1"><strong>${o.price }VNĐ</strong></span></p>
+                                                <h5 class="show_txt">${o.productName }</h5>
+                                                <p><span class="mr-1"><strong>${String.format("%.0f",o.price)}VNĐ</strong></span></p>
 
                                             </div>
 
@@ -250,17 +251,7 @@
 
                     <jsp:include page="footer.jsp"></jsp:include>
                     <!-- Footer -->
-                    <script>
-                        function clearPriceFilter() {
-                            // Clear the selected price filter
-                            document.querySelectorAll('input[name="materialExampleRadios"]').forEach((radio) => {
-                                radio.checked = false;
-                            });
-
-                            // Submit the form without the price filter
-                            document.querySelector('.filters').submit();
-                        }
-                    </script>
+                    
                     <!-- JQuery -->
                     <script src="https://mdbootstrap.com/previews/ecommerce-demo/js/jquery-3.4.1.min.js"></script>
                     <!-- Bootstrap tooltips -->

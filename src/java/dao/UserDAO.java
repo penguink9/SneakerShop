@@ -99,6 +99,18 @@ public class UserDAO extends DBContext {
         return userExists;
     }
 
+    public void changePassword(String username, String password) {
+        String sql = "Update Users set Password = ? where Username = ? ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, password);
+            st.setString(2, username);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     public void update(String name, String address, String phone, String email, String dob, String userName, String img) {
         String sql = "UPDATE [dbo].[Users] SET \n";
         if (name != null) {
@@ -143,27 +155,17 @@ public class UserDAO extends DBContext {
     }
 
     public boolean checkUserNameDuplicate(String username) {
-        String sql = "SELECT * FROM Users WHERE userName = ? and [status] = 1";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
+        String sql = "SELECT 1 FROM Users WHERE userName = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, username);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                User u = new User(rs.getString("userName"),
-                        rs.getString("fullName"),
-                        rs.getString("password"),
-                        rs.getInt("roleID"),
-                        rs.getString("imageURL"),
-                        rs.getString("email"),
-                        rs.getString("birthDay"),
-                        rs.getString("address"),
-                        rs.getString("phone"));
-                return true;
+            try (ResultSet rs = st.executeQuery()) {
+                // If there's a result, it means the username exists
+                return rs.next();
             }
         } catch (SQLException e) {
             System.out.println(e);
+            return false; // Optionally, you might want to handle this differently
         }
-        return false;
     }
 
     public static void main(String[] args) {

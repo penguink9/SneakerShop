@@ -4,6 +4,7 @@ import context.DBContext;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.Item;
 import model.Product;
 
 public class ProductDAO extends DBContext {
@@ -13,7 +14,7 @@ public class ProductDAO extends DBContext {
     }
 
     public List<Product> getAllProducts() {
-        String sql = "SELECT * FROM Products";
+        String sql = "SELECT * FROM Products WHERE Quantity>0";
         List<Product> products = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -139,19 +140,21 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
+
     public List<Product> get12Last() {
-    	List<Product> list = new ArrayList<>();
+        List<Product> list = new ArrayList<>();
         String sql = "select top 12 * from Products order by [ProductID] desc";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-            	list.add(extractProductFromResultSet(rs));
+                list.add(extractProductFromResultSet(rs));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return list;
     }
+
     public List<Product> getListByPage(List<Product> list, int start, int end) {
         ArrayList<Product> arr = new ArrayList<>();
         for (int i = start; i < end; i++) {
@@ -159,34 +162,78 @@ public class ProductDAO extends DBContext {
         }
         return arr;
     }
-    
+
     public List<Product> getTop4BestSelling() {
         List<Product> listProduct = new ArrayList<>();
 
         String sql = "SELECT TOP 4 * FROM Products ORDER BY [QuantitySold] DESC";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
-        while (resultSet.next()) {
-            listProduct.add(extractProductFromResultSet(resultSet));
-        }
+            while (resultSet.next()) {
+                listProduct.add(extractProductFromResultSet(resultSet));
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return listProduct;
     }
-    public List<Product> getRelatedProduct(int categoryID) {
+
+    public List<Product> getTop10BestSelling() {
+        List<Product> listProduct = new ArrayList<>();
+
+        String sql = "SELECT TOP 10 * FROM Products ORDER BY [QuantitySold] DESC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                listProduct.add(extractProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listProduct;
+    }
+
+    public List<Product> getRelatedProduct(Product product) {
         List<Product> list = new ArrayList<>();
-        String sql = "select top 4 * from [Products] where [CategoryID] =? order by [ProductID] desc";
-        try (PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setInt(1, categoryID);
+        String sql = "SELECT TOP 4 * FROM [Products] WHERE [CategoryID] = ? AND [ProductID] != ? ORDER BY [ProductID] DESC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, product.getCategoryID());
+            statement.setInt(2, product.getProductID());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(extractProductFromResultSet(rs));
             }
         } catch (Exception e) {
+            // Handle exception, e.g., log it
         }
         return list;
+    }
+
+    public void updateProductQuantities(int productID, int quantity, int quantitySold) {
+        String sql = "UPDATE Products SET Quantity = ?, QuantitySold = ? WHERE ProductID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, quantity);
+            statement.setInt(2, quantitySold);
+            statement.setInt(3, productID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void adjustQuantities(Item item) {
+        String sql = "UPDATE Products SET Quantity = Quantity - ?, QuantitySold = QuantitySold + ? WHERE ProductID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, item.getQuantity());
+            statement.setInt(2, item.getQuantity());
+            statement.setInt(3, item.getProduct().getProductID());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Product extractProductFromResultSet(ResultSet rs) throws SQLException {
@@ -223,10 +270,11 @@ public class ProductDAO extends DBContext {
         preparedStatement.setFloat(12, product.getDiscount());
         preparedStatement.setBoolean(13, product.isStatus());
     }
+
     public static void main(String[] args) {
-        ProductDAO dao= new ProductDAO();
-        List<Product> list= dao.getRelatedProduct(4);
-        for(Product p: list) {
+        ProductDAO dao = new ProductDAO();
+        List<Product> list = dao.getAllProducts();
+        for (Product p : list) {
             System.out.println(p);
         }
     }

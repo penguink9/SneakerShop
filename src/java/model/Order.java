@@ -1,22 +1,25 @@
-
 package model;
 
 import java.util.Date;
+
 public class Order {
     private int orderID;
     private Date date;
+    private String receiver;
+    private String phone;
     private String userName;
     private String deliveryAddress;
     private double totalMoney;
-    private boolean status;
+    private boolean status; // Assuming this is automatically set by the database
 
-    public Order(int orderID, Date date, String userName, String deliveryAddress, double totalMoney, boolean status) {
+    public Order(int orderID, Date date, String receiver, String phone, String userName, String deliveryAddress, double totalMoney) {
         this.orderID = orderID;
         this.date = date;
+        this.receiver = receiver;
+        this.phone = phone;
         this.userName = userName;
         this.deliveryAddress = deliveryAddress;
         this.totalMoney = totalMoney;
-        this.status = status;
     }
 
     // Getters and Setters
@@ -34,6 +37,22 @@ public class Order {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUserName() {

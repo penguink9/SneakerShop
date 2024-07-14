@@ -21,6 +21,39 @@ public class SearchAndFilterServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          response.setContentType("text/html;charset=UTF-8");
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("searched", false);
+        session.setAttribute("txtS", null);
+        session.setAttribute("selectedPriceRange", null);
+        request.getRequestDispatcher("shop").forward(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
         ProductDAO pDAO = new ProductDAO();
@@ -33,7 +66,7 @@ public class SearchAndFilterServlet extends HttpServlet {
 
         // Get search and filter parameters
         String searchQuery = request.getParameter("txt");
-        String priceRange = request.getParameter("materialExampleRadios");
+        String priceRange = request.getParameter("priceRange");
 
         // Apply search filter
         if (searchQuery != null && !searchQuery.isEmpty()) {
@@ -67,40 +100,11 @@ public class SearchAndFilterServlet extends HttpServlet {
         session.setAttribute("searched", true);
         session.setAttribute("searchList", listP);
         // Set search and filter parameters as request attributes
-        request.setAttribute("txtS", searchQuery);
-        request.setAttribute("selectedPriceRange", priceRange);
+        session.setAttribute("txtS", searchQuery);
+        session.setAttribute("selectedPriceRange", priceRange);
 
         // Forward to the shop.jsp page
         request.getRequestDispatcher("shop").forward(request, response);
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

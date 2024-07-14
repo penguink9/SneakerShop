@@ -70,7 +70,6 @@ public class ShopServlet extends HttpServlet {
         }
         request.setAttribute("tag", indexPage);
         request.setAttribute("endPage", endPage);
-        session.setAttribute("searched", false);
         session.setAttribute("listP", list);
 
         request.getRequestDispatcher("shop.jsp").forward(request, response);
