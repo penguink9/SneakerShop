@@ -31,7 +31,7 @@
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
                     <li><i class="fa fa-home mr-2"></i>FPT University Da Nang</li>
-                    <li><i class="fa fa-envelope mr-2"></i>sneakerking@gmail.com</li>
+                    <li><i class="fa fa-envelope mr-2"></i>sneakerkingshoppp@gmail.com</li>
                     <li><i class="fa fa-phone mr-2"></i>0961623771</li>
                     <li><i class="fa fa-print mr-2"></i>0961623771</li>
                 </ul>

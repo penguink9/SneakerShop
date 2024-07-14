@@ -5,6 +5,7 @@
 package controller.web.shop;
 
 import dao.CartDAO;
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,8 +14,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import model.Cart;
 import model.Item;
+import model.Product;
+
 /**
  *
  * @author Techcare
@@ -34,13 +39,28 @@ public class EditCartControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int pid=Integer.parseInt(request.getParameter("pid"));
-        int quantity=Integer.parseInt(request.getParameter("quantity"));
-        String size=request.getParameter("size");
-        HttpSession session= request.getSession();
-        Cart cart= (Cart) session.getAttribute("cart");
-        cart.getItemByIDAndSize(pid,size).setQuantity(quantity);
-        CartDAO cartDAO= new CartDAO();
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String size = request.getParameter("size");
+        HttpSession session = request.getSession();
+        ProductDAO pDAO = new ProductDAO();
+        Product product = pDAO.getProductById(pid);
+        Cart cart = (Cart) session.getAttribute("cart");
+//        List<Item> searchList= new ArrayList<>();
+//        int sumQuantity=0;
+//        for(Item i: cart.getListItems()) {
+//            if(i.getProduct().getProductID()==pid){
+//                searchList.add(i);
+//                sumQuantity+=i.getQuantity();
+//            }
+//        }
+        Item t = cart.getItemByIDAndSize(pid, size);
+        cart.removeItem(pid, size);
+        Item i = new Item(product, quantity, size);
+        if (!cart.addItem(i)) {
+            cart.addItem(t);
+        }
+        CartDAO cartDAO = new CartDAO();
         cartDAO.updateCart(cart);
         session.setAttribute("cart", cart);
         request.getRequestDispatcher("viewcart").forward(request, response);

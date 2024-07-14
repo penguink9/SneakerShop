@@ -96,7 +96,7 @@
     <body>
 
         <!--Main Navigation-->
-            <header>
+        <header>
 
             <jsp:include page="admin_menu.jsp"></jsp:include>
             </header>
@@ -138,25 +138,46 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${listTop10Product}" var="t">
-                                                    <tr>
-                                                        <td>${t.getProductID()}</td>
-                                                        <td>${t.getProductName()}</td>
-                                                        <td>
-                                                            <img src="${t.getImage()}">
-                                                        </td>
-                                                        <td>${String.format("%.1f",t.price)} VNĐ</td>
-                                                        <td>${t.getQuantitySold() }</td>
-                                                    </tr>
+                                            <tr>
+                                                <td>${t.getProductID()}</td>
+                                                <td>${t.getProductName()}</td>
+                                                <td>
+                                                    <img src="${t.getImage()}">
+                                                </td>
+                                                <td>${String.format("%.1f",t.price)} VNĐ</td>
+                                                <td>${t.getQuantitySold() }</td>
+                                            </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-
-
-
                             </div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <c:if test="${currentPage > 1}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="top10product?page=${currentPage - 1}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+                                    <c:forEach var="i" begin="1" end="${totalPages}">
+                                        <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                            <a class="page-link" href="top10product?page=${i}">${i}</a>
+                                        </li>
+                                    </c:forEach>
+                                    <c:if test="${currentPage < totalPages}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="top10product?page=${currentPage + 1}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </section>
+
                 <!--Section: Quan Ly tai Khoan-->
             </div>
 

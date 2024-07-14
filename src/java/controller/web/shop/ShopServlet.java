@@ -41,7 +41,7 @@ public class ShopServlet extends HttpServlet {
         }
         int cid = Integer.parseInt((String) session.getAttribute("cid"));
         if (cid == 0) {
-            listP = pDAO.getAllProducts();
+            listP = pDAO.getAllProductsAvail();
         } else {
             listP = pDAO.getProductsByCategoryid(cid);
         }
@@ -71,7 +71,6 @@ public class ShopServlet extends HttpServlet {
         request.setAttribute("tag", indexPage);
         request.setAttribute("endPage", endPage);
         session.setAttribute("listP", list);
-
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 

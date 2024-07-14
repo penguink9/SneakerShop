@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
+
     private String username;
     private List<Item> listItems;
     private int size;
@@ -11,13 +12,13 @@ public class Cart {
     public Cart(String username) {
         this.username = username;
         listItems = new ArrayList<>();
-        this.size=0;
+        this.size = 0;
     }
 
     public Cart(String username, List<Item> listItems) {
         this.username = username;
         this.listItems = listItems;
-        this.size= listItems.size();
+        this.size = listItems.size();
     }
 
     public int getSize() {
@@ -42,7 +43,7 @@ public class Cart {
 
     public void setListItems(List<Item> listItems) {
         this.listItems = listItems;
-        this.size=listItems.size();
+        this.size = listItems.size();
     }
 
     public Item getItemByIDAndSize(int id, String size) {
@@ -59,14 +60,25 @@ public class Cart {
         return (item != null) ? item.getQuantity() : 0;
     }
 
-    public void addItem(Item t) {
-        Item existingItem = getItemByIDAndSize(t.getProduct().getProductID(), t.getSize());
-        if (existingItem != null) {
-            existingItem.setQuantity(existingItem.getQuantity() + t.getQuantity());
+    public boolean addItem(Item t) {
+        List<Item> list= getItemsByPID(t.getProduct().getProductID());
+        int currentQuantity = 0;
+        for(Item i:list) {
+            currentQuantity+=i.getQuantity();
+        }
+        int newQuantity = currentQuantity + t.getQuantity();
+        if (newQuantity > t.getProduct().getQuantity()) {
+            return false;
+        }
+        Item item= getItemByIDAndSize(t.getProduct().getProductID(), t.getSize());
+        
+        if (item != null) {
+            item.setQuantity(item.getQuantity()+t.getQuantity());
         } else {
             listItems.add(t);
         }
         size = listItems.size();
+        return true;
     }
 
     public void removeItem(int id, String sSize) {
@@ -83,6 +95,15 @@ public class Cart {
             list.add(item.getProduct());
         }
         return list;
+    }
+    public List<Item> getItemsByPID(int productID) {
+        List<Item> items = new ArrayList<>();
+        for (Item item : listItems) {
+            if (item.getProduct().getProductID() == productID) {
+                items.add(item);
+            }
+        }
+        return items;
     }
 
     public double getTotalMoney() {

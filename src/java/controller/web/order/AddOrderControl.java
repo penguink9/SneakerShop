@@ -2,6 +2,7 @@ package controller.web.order;
 
 import dao.CartDAO;
 import dao.OrderDAO;
+import email.EmailUtility;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,11 +48,24 @@ public class AddOrderControl extends HttpServlet {
         cartDAO.updateCart(cart);
 
         // Create Order object
-        Order order = new Order(0, new Date(), receiver, phone, username, deliveryAddress, totalMoney);
+        Order order = new Order(0, new Date(), receiver, phone, username, deliveryAddress, totalMoney,true);
 
         // Add order to the database
         OrderDAO orderDAO = new OrderDAO();
         orderDAO.addOrder(order, items);
+        String subject = "Order Confirmation";
+        SimpleDateFormat format= new SimpleDateFormat("dd-MM-yyyy");
+        String body = String.format(
+                "<html><body>"
+                + "<p>Cảm ơn bạn <strong>%s</strong> đã đặt hàng ở <strong>SneakerKing Shop</strong></p>"
+                + "<p>Đơn hàng sẽ được gửi đến <strong>%s</strong> trong thời gian sớm nhất.</p>"
+                + "<p>Chúng tôi sẽ liên lạc qua số điện thoại <strong>%s</strong>.</p>"
+                + "<p>Tổng số tiền phải thanh toán là <strong>%.2f</strong> VNĐ.</p>"
+                + "<p><em>SneakerKingShop</em></p>"
+                + "</body></html>",
+                receiver, deliveryAddress, phone,totalMoney
+        );
+        EmailUtility.sendEmail(user.getEmail(), subject, body);
 
         // Redirect or forward to success page
         session.setAttribute("cart", cart);

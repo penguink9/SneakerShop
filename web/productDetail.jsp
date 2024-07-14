@@ -68,6 +68,13 @@
                     alert('Please select a size before adding to cart.');
                     return false;
                 }
+
+                const quantity = document.querySelector('input[name="quantity"]').value;
+                const maxQuantity = ${product.quantity};
+                if (quantity > maxQuantity) {
+                    alert('Selected quantity exceeds the quantity of product.');
+                    return false;
+                }
                 return true;
             }
         </script>
@@ -75,29 +82,29 @@
     <body class="skin-light">
         <jsp:include page="menu.jsp"></jsp:include>
 
-        <div class="jumbotron color-grey-light mt-70">
-            <div class="d-flex align-items-center h-100">
-                <div class="container text-center py-5">
-                    <h3 class="mb-0">Detail Product</h3>
+            <div class="jumbotron color-grey-light mt-70">
+                <div class="d-flex align-items-center h-100">
+                    <div class="container text-center py-5">
+                        <h3 class="mb-0">Detail Product</h3>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!--Main Navigation-->
+            <!--Main Navigation-->
 
-        <!--Main layout-->
-        <main>
-            <div class="container">
-                <!--Section: Block Content-->
-                <section class="mb-5">
-                    <div class="row">
-                        <div class="col-md-6 mb-4 mb-md-0">
-                            <div id="mdb-lightbox-ui"></div>
-                            <div class="mdb-lightbox">
-                                <div class="row product-gallery mx-1">
-                                    <div class="col-12 mb-0">
-                                        <figure class="view overlay rounded z-depth-1 main-img" style="max-height: 450px;">
-                                            <a href="${product.image}" data-size="710x823">
+            <!--Main layout-->
+            <main>
+                <div class="container">
+                    <!--Section: Block Content-->
+                    <section class="mb-5">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-md-0">
+                                <div id="mdb-lightbox-ui"></div>
+                                <div class="mdb-lightbox">
+                                    <div class="row product-gallery mx-1">
+                                        <div class="col-12 mb-0">
+                                            <figure class="view overlay rounded z-depth-1 main-img" style="max-height: 450px;">
+                                                <a href="${product.image}" data-size="710x823">
                                                 <img src="${product.image}" class="img-fluid z-depth-1" style="margin-top: -90px;">
                                             </a>
                                         </figure>
@@ -158,6 +165,7 @@
                                 <span class="text-grey"><strong><s>${String.format("%.0f", product.price)} VNĐ</s></strong></span>
                             </p>
                             <p class="pt-1">${product.description}</p>
+                            <span class="pl-0 pb-0 w-25 text-grey">Số lượng trong kho:${product.quantity}</span>
                             <form action="addtocart?pid=${product.productID}" method="post" onsubmit="return validateForm();">
                                 <div class="table-responsive mb-2">
                                     <table class="table table-sm table-borderless">
@@ -205,9 +213,14 @@
                                 <div class="mt-1">
                                     <button type="submit" class="btn btn-light btn-md mr-1 mb-2"><i class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
                                 </div>
+
                                 <c:if test="${not empty mess}">
-                                    <div class="text-center"><c:out value="${mess}" /></div>
+                                    <div class="alert alert-success"> ${mess} </div>
                                 </c:if>
+                                <c:if test="${not empty error}">
+                                    <div class="alert alert-danger"> ${error} </div>
+                                </c:if>
+
                             </form>
                         </div>
                     </div>

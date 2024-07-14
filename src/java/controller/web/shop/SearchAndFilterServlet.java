@@ -39,7 +39,7 @@ public class SearchAndFilterServlet extends HttpServlet {
         session.setAttribute("searched", false);
         session.setAttribute("txtS", null);
         session.setAttribute("selectedPriceRange", null);
-        request.getRequestDispatcher("shop").forward(request, response);
+        request.getRequestDispatcher("shop?cid=0").forward(request, response);
     }
 
     /**

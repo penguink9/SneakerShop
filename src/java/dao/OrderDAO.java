@@ -114,10 +114,8 @@ public class OrderDAO extends DBContext {
         String userName = rs.getString("UserName");
         String deliveryAddress = rs.getString("DeliveryAddress");
         double totalMoney = rs.getDouble("TotalMoney");
-        // Assuming status is automatically set by the database
         boolean status = rs.getBoolean("status");
-
-        return new Order(orderID, date, receiver, phone, userName, deliveryAddress, totalMoney);
+        return new Order(orderID, date, receiver, phone, userName, deliveryAddress, totalMoney,status);
     }
 
     public double sumAllOrders() {
@@ -222,8 +220,9 @@ public class OrderDAO extends DBContext {
     // Test main method
     public static void main(String[] args) {
         OrderDAO dao = new OrderDAO();
-//        List<Order> test = dao.getOrdersByUsername("penguin");
-//        System.out.println(test.size());
-        System.out.println(dao.sumAllOrders()/4);
+        List<Order> test = dao.getAllOrders();
+        for(Order t: test) {
+            System.out.println(t);
+        }
     }
 }

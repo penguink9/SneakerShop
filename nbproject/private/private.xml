@@ -3,21 +3,57 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/EditProfileControl.java</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin_menu.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/login/RegisterServlet.java</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/manageUser.jsp</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/cart.jsp</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/viewProfile.jsp</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/shop.jsp</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/menu.jsp</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/productDetail.jsp</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/manageProduct.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/CartDAO.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/DetailProductControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/login.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/top10product.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/login/LoginServlet.java</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/statistic.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/ViewCartServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/orderHistory.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/AddUserServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/DeleteUserServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/home.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/EditProfileControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/EditCartControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/shop.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/model/Product.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/menu.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/model/Cart.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/changePassword.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/LoadControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/order/OrderHistoryControl.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/OrderDAO.java</file>
-            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/manageOrder.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/manageOrder.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/ProductDAO.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/manageUser.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/top5customer.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/ViewProfileControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/viewProfile.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/model/Item.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/footer.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/email/EmailUtility.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/ManageUserServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/order/AddOrderControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/OrderManager.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/StatisticControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/filter/AdminFilter.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/Top5Customer.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/ShopServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/filter/HomeFilter.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/ManageProducts.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/HomeServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/UserDAO.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/AddProductServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/productDetail.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/DeleteProductServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/filter/LoginFilter.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/Top10SanPhamControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/register.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/manageProduct.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/AddToCartControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/SearchAndFilterServlet.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/EditProductServlet.java</file>
         </group>
     </open-files>
 </project-private>

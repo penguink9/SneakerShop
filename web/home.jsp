@@ -132,12 +132,13 @@
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-title text-center show_txt"><a href="detail?pid=${o.productID}" title="View Product">${o.productName}</a></h4>
-
+                                        <h4 class="card-title text-center">Đã Bán: ${o.quantitySold}</h4>
                                         <div class="row">
                                             <div class="col">
                                                 <p class="btn btn-success btn-block">${String.format("%.0f",o.price)} VND</p>
                                             </div> 
                                         </div>
+                                            
                                     </div>
                                 </div>
                             </div>
@@ -183,7 +184,7 @@
                                 <h4 class="card-title show_txt" style="text-align:center; font-size:18pt; color:#b57b00;">Về chúng tôi</h4>
                                 <h2 class="card-title show_txt" style="text-align:center; font-size:24pt;">Sneaker King</h2>
                                 <p style="text-align:center;">Website Sneaker King được tạo ra bởi Group 6 Class SE18B06 PRJ301 FPTU Da Nang</p>
-                                <p style="text-align:center;">Group Members:</p>
+                                <p style="text-align:center;">Group Members</p>
                                 <p style="text-align:center;">Nguyễn Trường Giang</p>
                                 <p style="text-align:center;">Trần Chí Minh</p>
                                 <p style="text-align:center;">Trương Tuấn Kiệt</p>
@@ -199,11 +200,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
         </div>
 
         <jsp:include page="footer.jsp"></jsp:include>

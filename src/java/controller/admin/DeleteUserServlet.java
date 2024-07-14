@@ -25,12 +25,15 @@ public class DeleteUserServlet extends HttpServlet {
         UserDAO udao = new UserDAO();
         CartDAO cdao = new CartDAO();
         cdao.deleteCartByUserName(username);
-        udao.deleteUser(username);
-        request.setAttribute("mess", "Account Deleted!");
+        if (udao.deleteUser(username)) {
+            request.setAttribute("mess", "Account Deleted!");
+        } else {
+            request.setAttribute("error", "Account Has Delivering Order!");
+        }
         List<User> list = udao.getAllUsers();
         request.setAttribute("listA", list);
         request.getRequestDispatcher("admin/manageUser.jsp").forward(request, response);
-        
+
     }
 
     @Override

@@ -59,21 +59,21 @@
     <body>
         <header>
             <jsp:include page="admin_menu.jsp"></jsp:include>
-        </header>
+            </header>
 
-        <main>
-            <div class="container pt-4">
-                <section class="mb-4">
-                    <div class="card">
-                        <div class="card-header py-3 row">
-                            <div class="col-sm-3">
-                                <h5 class="mb-0 text-left"><strong>Quản lý tài khoản</strong></h5>
-                            </div>
-                            <div class="col-sm-9 text-right">
-                                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">New</i></a>
+            <main>
+                <div class="container pt-4">
+                    <section class="mb-4">
+                        <div class="card">
+                            <div class="card-header py-3 row">
+                                <div class="col-sm-3">
+                                    <h5 class="mb-0 text-left"><strong>Quản lý tài khoản</strong></h5>
+                                </div>
+                                <div class="col-sm-9 text-right">
+                                    <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">New</i></a>
 
+                                </div>
                             </div>
-                        </div>
                         <c:if test="${error != null}">
                             <div class="alert alert-danger" role="alert">${error}</div>
                         </c:if>
@@ -105,18 +105,17 @@
                                                         <c:when test="${o.getRoleID() == 0}">
                                                             Admin
                                                         </c:when>
-                                                        <c:otherwise>
-                                                            Unknown
-                                                        </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                                 <td>${o.getEmail()}</td>
                                                 <td>
-                                                    <a class="" href="deleteuser?username=${o.getUserName()}">
-                                                        <button type="button" class="btn btn-danger">
-                                                            <i class="material-icons" data-toggle="tooltip" title="Delete">Delete</i>
-                                                        </button>
-                                                    </a>
+                                                    <c:if test="${o.getRoleID() == 1}">
+                                                            <a class="" href="deleteuser?username=${o.getUserName()}">
+                                                                <button type="button" class="btn btn-danger">
+                                                                    <i class="material-icons" data-toggle="tooltip" title="Delete">Delete</i>
+                                                                </button>
+                                                            </a>
+                                                    </c:if>            
                                                 </td>
                                             </tr>
                                         </c:forEach>

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import model.Product;
+
 @WebServlet(name = "DetailProductControl", urlPatterns = {"/detail"})
 public class DetailProductControl extends HttpServlet {
 
@@ -28,7 +29,7 @@ public class DetailProductControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,11 +46,9 @@ public class DetailProductControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         ProductDAO pDAO = new ProductDAO();
-        Product product= pDAO.getProductById(Integer.parseInt(request.getParameter("pid")));
+        Product product = pDAO.getProductById(Integer.parseInt(request.getParameter("pid")));
         List<Product> listRelatedProduct = pDAO.getRelatedProduct(product);
-        String mess=(String) request.getAttribute("mess");
         request.setAttribute("product", product);
-        request.setAttribute("mess", mess);
         request.setAttribute("listRelatedProduct", listRelatedProduct);
         request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     }

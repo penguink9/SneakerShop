@@ -146,7 +146,7 @@
                                                         <div class="p-2 d-flex align-items-center">
                                                             <img src="${o.product.image}" alt="" class="img-fluid rounded shadow-sm">
                                                             <div class="ml-3">
-                                                                <h5 class="mb-0"><a href="#" class="text-dark">${o.product.productName}</a></h5>
+                                                                <h5 class="mb-0"><a href="detail?pid=${o.product.productID}" class="text-dark">${o.product.productName}</a></h5>
                                                                 <span class="text-muted font-weight-normal font-italic"></span>
                                                             </div>
                                                         </div>
@@ -197,11 +197,11 @@
                                         <div class="alert alert-success" role="alert">${mess}</div>
                                     </c:if>
                                     <label for="receiver">Người nhận</label>
-                                    <input name="receiver" type="text" id="receiver" class="form-control" placeholder="Receiver" required autofocus>
+                                    <input name="receiver" type="text" id="receiver" class="form-control" placeholder="Receiver" required >
                                     <label for="phoneNumber">SĐT</label>
-                                    <input name="phoneNumber" type="text" id="phoneNumber" class="form-control" placeholder="Phone Number" required autofocus>                
+                                    <input name="phoneNumber" type="text" id="phoneNumber" class="form-control" placeholder="Phone Number" required >                
                                     <label for="deliveryAddress">Địa chỉ giao hàng</label>
-                                    <input name="deliveryAddress" type="text" id="deliveryAddress" class="form-control" placeholder="Delivery Address" required autofocus>
+                                    <input name="deliveryAddress" type="text" id="deliveryAddress" class="form-control" placeholder="Delivery Address" required >
                                     <button class="btn btn-dark rounded-pill py-2 btn-block text-white" type="submit"><i class="fas fa-american-sign-language-interpreting"></i>Đặt Hàng</button>
                                 </form>
                             </div>

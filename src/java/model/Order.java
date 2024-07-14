@@ -10,9 +10,9 @@ public class Order {
     private String userName;
     private String deliveryAddress;
     private double totalMoney;
-    private boolean status; // Assuming this is automatically set by the database
+    private boolean status;
 
-    public Order(int orderID, Date date, String receiver, String phone, String userName, String deliveryAddress, double totalMoney) {
+    public Order(int orderID, Date date, String receiver, String phone, String userName, String deliveryAddress, double totalMoney,boolean status) {
         this.orderID = orderID;
         this.date = date;
         this.receiver = receiver;
@@ -20,6 +20,7 @@ public class Order {
         this.userName = userName;
         this.deliveryAddress = deliveryAddress;
         this.totalMoney = totalMoney;
+        this.status=status;
     }
 
     // Getters and Setters
@@ -85,5 +86,10 @@ public class Order {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderID=" + orderID + ", date=" + date + ", receiver=" + receiver + ", phone=" + phone + ", userName=" + userName + ", deliveryAddress=" + deliveryAddress + ", totalMoney=" + totalMoney + ", status=" + status + '}';
     }
 }

@@ -27,7 +27,7 @@ public class OrderManager extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
         OrderDAO dao = new OrderDAO();
@@ -35,12 +35,36 @@ public class OrderManager extends HttpServlet {
 
         double sumAllInvoice = dao.sumAllOrders();
 
-        List<Order> listAllInvoice = dao.getAllOrders();
+        List<Order> listAllInvoice;
         List<User> listAllAccount = dao2.getAllUsers();
 
-        request.setAttribute("listAllInvoice", listAllInvoice);
+        String action = request.getParameter("action");
+        if (action != null && action.equals("searchByDate")) {
+            String dateString = request.getParameter("dateHoaDon");
+            listAllInvoice = dao.getOrdersByDate(dateString);
+            request.setAttribute("dob", dateString);
+        } else {
+            listAllInvoice = dao.getAllOrders();
+        }
+
+        // Pagination logic
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        int totalOrders = listAllInvoice.size();
+        int totalPages = (int) Math.ceil((double) totalOrders / 10);
+        int start = (page - 1) * 10;
+        int end = Math.min(start + 10, totalOrders);
+
+        List<Order> paginatedList = listAllInvoice.subList(start, end);
+
+        request.setAttribute("listAllInvoice", paginatedList);
         request.setAttribute("listAllAccount", listAllAccount);
         request.setAttribute("sumAllInvoice", sumAllInvoice);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
 
         request.getRequestDispatcher("admin/manageOrder.jsp").forward(request, response);
     }
@@ -71,24 +95,25 @@ public class OrderManager extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if (action != null && action.equals("searchByDate")) {
-            String dateString = request.getParameter("dateHoaDon");
-
-            OrderDAO dao = new OrderDAO();
-            UserDAO dao2 = new UserDAO();
-
-            List<Order> listAllInvoice = dao.getOrdersByDate(dateString);
-            List<User> listAllAccount = dao2.getAllUsers();
-            request.setAttribute("dob", dateString);
-            request.setAttribute("listAllInvoice", listAllInvoice);
-            request.setAttribute("listAllAccount", listAllAccount);
-
-            request.getRequestDispatcher("admin/manageOrder.jsp").forward(request, response);
-        } else {
-            processRequest(request, response);
-        }
+        processRequest(request, response);
+//        String action = request.getParameter("action");
+//
+//        if (action != null && action.equals("searchByDate")) {
+//            String dateString = request.getParameter("dateHoaDon");
+//
+//            OrderDAO dao = new OrderDAO();
+//            UserDAO dao2 = new UserDAO();
+//
+//            List<Order> listAllInvoice = dao.getOrdersByDate(dateString);
+//            List<User> listAllAccount = dao2.getAllUsers();
+//            request.setAttribute("dob", dateString);
+//            request.setAttribute("listAllInvoice", listAllInvoice);
+//            request.setAttribute("listAllAccount", listAllAccount);
+//
+//            request.getRequestDispatcher("admin/manageOrder.jsp").forward(request, response);
+//        } else {
+//            processRequest(request, response);
+//        }
     }
 
     /**

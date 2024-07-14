@@ -47,7 +47,21 @@ public class EditProductServlet extends HttpServlet {
         dao.updateProduct(product);
         request.setAttribute("mess", "Edited!");
         List<Product> list = dao.getAllProducts();
-        request.setAttribute("listP", list);
+        // Pagination logic
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        int totalProducts = list.size();
+        int totalPages = (int) Math.ceil((double) totalProducts / 6);
+        int start = (page - 1) * 6;
+        int end = Math.min(start + 6, totalProducts);
+
+        List<Product> paginatedList = list.subList(start, end);
+        request.setAttribute("listP", paginatedList);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
         request.getRequestDispatcher("admin/manageProduct.jsp").forward(request, response);
     }
 

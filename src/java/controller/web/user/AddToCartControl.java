@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import model.Cart;
 import model.Item;
 import model.Product;
@@ -45,12 +46,19 @@ public class AddToCartControl extends HttpServlet {
         int amount = Integer.parseInt(request.getParameter("quantity"));
         String size = request.getParameter("size");
         Item item = new Item(product, amount,size);
-        cart.addItem(item);
+        String mess=null,error=null;
+        if(cart.addItem(item)){
         CartDAO cartDAO = new CartDAO();
         cartDAO.updateCart(cart);
         session.setAttribute("cart", cart);
-        request.setAttribute("mess", "Đã thêm vào giỏ hàng!");
-        response.sendRedirect("detail?pid="+productID);
+        request.setAttribute("mess", "Đã thêm vào giỏ hàng");
+        } else{
+            request.setAttribute("error", "Không thể thêm!!Vượt quá số lượng sản phẩm");
+        }
+        List<Product> listRelatedProduct = pDAO.getRelatedProduct(product);
+        request.setAttribute("product", product);
+        request.setAttribute("listRelatedProduct", listRelatedProduct);
+        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -16,10 +16,10 @@
                 <li class="nav-item">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="shop" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="shop?cid=0" id="navbarDropdownMenuLink" data-toggle="dropdown" >
                                 Shop
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu" >
                                 <a class="dropdown-item" href="shop?cid=${0}">Tất cả sản phẩm</a>
                                 <c:forEach items="${sessionScope.listCategories}" var="o">
                                     <a class="dropdown-item" href="shop?cid=${o.categoryID}" >${o.categoryName}</a>

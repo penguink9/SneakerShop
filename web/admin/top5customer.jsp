@@ -132,7 +132,7 @@
                                                 <td>${customer.userName}</td>
                                                 <td>${customer.email}</td>
                                                 <td>${customer.phone}</td>
-                                                <td>${String.format("%.1f",customer.totalSpend())}</td>
+                                                <td>${String.format("%.1f",customer.totalSpend())} VNĐ</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

@@ -171,9 +171,5 @@ public class UserDAO extends DBContext {
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
         List<User> list = dao.getAllUsers();
-        for (User u : list) {
-            System.out.println(u);
-        }
-        System.out.println(dao.checkUser("minh123", "123789"));
     }
 }

@@ -63,10 +63,10 @@
                                                     <td>${i.deliveryAddress}</td>
                                                     <td>${String.format("%.0f", i.totalMoney)} VNĐ</td>
                                                     <td>
-                                                        <c:if test="${i.status}">
+                                                        <c:if test="${!i.status}">
                                                             Delivered
                                                         </c:if>
-                                                        <c:if test="${!i.status}">
+                                                        <c:if test="${i.status}">
                                                             Delivering
                                                         </c:if>
                                                     </td>
