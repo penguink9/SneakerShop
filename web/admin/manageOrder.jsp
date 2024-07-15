@@ -123,10 +123,10 @@
                                                 <td>${i.phone}</td>
                                                 <td>${i.deliveryAddress}</td>
                                                 <td>
-                                                    <c:if test="${i.status==0}">
+                                                    <c:if test="${!i.status}">
                                                         Delivered
                                                     </c:if>
-                                                    <c:if test="${i.status==1}">
+                                                    <c:if test="${i.status}">
                                                         Delivering
                                                     </c:if>
                                                 </td>

@@ -12,10 +12,8 @@ public class EmailUtility {
 
     public static void sendEmail(String toEmail, String subject, String body) {
         String host = "smtp.gmail.com";
-        final String user = "sneakerkingshoppp@gmail.com"; // your email
-        final String password = "jothrvnebvmsdfmy"; // your email password
-
-        // Cấu hình thuộc tính
+        final String user = "youremail@gmail.com"; // your email
+        final String password = "password"; // your email password
         Properties props = new Properties();
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.auth", "true");

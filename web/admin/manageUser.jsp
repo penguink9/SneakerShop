@@ -105,6 +105,9 @@
                                                         <c:when test="${o.getRoleID() == 0}">
                                                             Admin
                                                         </c:when>
+                                                            <c:when test="${o.getRoleID() == 2}">
+                                                            Blocked
+                                                        </c:when>
                                                     </c:choose>
                                                 </td>
                                                 <td>${o.getEmail()}</td>
@@ -116,6 +119,22 @@
                                                                 </button>
                                                             </a>
                                                     </c:if>            
+                                                </td>
+                                                <td>
+                                                    <c:if test="${o.getRoleID() == 1}">
+                                                            <a class="" href="blockUser?username=${o.getUserName()}">
+                                                                <button type="button" class="btn ">
+                                                                    <i class="material-icons" data-toggle="tooltip" title="Block">Block</i>
+                                                                </button>
+                                                            </a>
+                                                    </c:if>
+                                                    <c:if test="${o.getRoleID() == 2}">
+                                                            <a class="" href="unBlock?username=${o.getUserName()}">
+                                                                <button type="button" class="btn ">
+                                                                    <i class="material-icons" data-toggle="tooltip" title="UnBlock">Unblock</i>
+                                                                </button>
+                                                            </a>
+                                                    </c:if>
                                                 </td>
                                             </tr>
                                         </c:forEach>

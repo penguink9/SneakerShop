@@ -188,20 +188,20 @@
                                                     <div class="mt-1">
                                                         <c:if test="${product.isSizeAvailable('S')}">
                                                             <div class="form-check form-check-inline pl-0">
-                                                                <input type="radio" class="form-check-input" id="small" value="S" name="size">
-                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="small">Small</label>
+                                                                <input type="radio" class="form-check-input" id="small" value="M" name="size">
+                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="small">37</label>
                                                             </div>
                                                         </c:if>
                                                         <c:if test="${product.isSizeAvailable('M')}">
                                                             <div class="form-check form-check-inline pl-0">
                                                                 <input type="radio" class="form-check-input" id="medium" value="M" name="size">
-                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="medium">Medium</label>
+                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="medium">38</label>
                                                             </div>
                                                         </c:if>
                                                         <c:if test="${product.isSizeAvailable('L')}">
                                                             <div class="form-check form-check-inline pl-0">
                                                                 <input type="radio" class="form-check-input" id="large" value="L" name="size">
-                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="large">Large</label>
+                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="large">39</label>
                                                             </div>
                                                         </c:if>
                                                     </div>

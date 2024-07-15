@@ -92,36 +92,32 @@
         </style>
     </head>
     <body>
-        <%@ include file="menu.jsp"%>
+        <jsp:include page="menu.jsp"></jsp:include>
         <div class="container">
-
-
-            <h1 style = "margin-top: 40px; text-align: center">Login</h1>
-            <form  action="login" method="post">
-
+            <h1 style="margin-top: 40px; text-align: center">Đăng nhập</h1>
+            <form action="login" method="post">
                 <div class="form-group">
-                    <label for="username">Username:</label>
+                    <label for="username">Tên đăng nhập:</label>
                     <input type="text" id="username" name="username" value="${uName}" /><br/><br/>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label for="password">Mật khẩu:</label>
                     <input type="password" id="password" name="password" value="${uPass}" /><br/><br/>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="remember" name="remember" ${reMem == 'true' ? 'checked' : ''} />
-                    <label class="form-check-label" for="remember">Remember Me</label>
+                    <label class="form-check-label" for="remember">Ghi nhớ đăng nhập</label>
                 </div>
-
-
-
                 <div class="form-group">
-                    <input type="submit" value="Login" />
+                    <input type="submit" value="Đăng nhập" ${isLocked ? 'disabled' : ''} />
                 </div>
             </form>
             <c:if test="${not empty error}">
-                <div class="error"><c:out value="${error}" /></div>
+                <div class="error" style="color: red; text-align: center; margin-top: 10px;">
+                    <c:out value="${error}" />
+                </div>
             </c:if>
         </div>
-        <jsp:include page="footer.jsp"></jsp:include>
+    <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

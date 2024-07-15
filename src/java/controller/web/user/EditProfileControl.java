@@ -18,11 +18,6 @@ import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import model.User;
-
-/**
- *
- * @author Techcare
- */
 @WebServlet(name = "EditProfileControl", urlPatterns = {"/editProfile"})
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB

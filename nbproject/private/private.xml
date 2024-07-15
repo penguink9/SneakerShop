@@ -6,7 +6,9 @@
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/login/RegisterServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/CartDAO.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/DetailProductControl.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/cart.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/login.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/ChangePassServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/top10product.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/login/LoginServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/ViewCartServlet.java</file>
@@ -20,16 +22,20 @@
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/model/Product.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/menu.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/model/Cart.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/statistic.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/changePassword.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/LoadControl.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/order/OrderHistoryControl.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/OrderDAO.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/UnBlockUser.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/manageOrder.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/ProductDAO.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/manageUser.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/filter/BlockFilter.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/top5customer.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/ViewProfileControl.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/viewProfile.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/block.html</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/model/Item.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/footer.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/email/EmailUtility.java</file>
@@ -39,11 +45,13 @@
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/StatisticControl.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/filter/AdminFilter.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/Top5Customer.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/BlockUserServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/ShopServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/filter/HomeFilter.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/ManageProducts.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/HomeServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/dao/UserDAO.java</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/model/Order.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/AddProductServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/productDetail.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/DeleteProductServlet.java</file>
@@ -51,6 +59,7 @@
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/Top10SanPhamControl.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/register.jsp</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/web/admin/manageProduct.jsp</file>
+            <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/login/LogoutServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/user/AddToCartControl.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/web/shop/SearchAndFilterServlet.java</file>
             <file>file:/C:/Users/Techcare/Documents/NetBeansProjects/SneakerShop/src/java/controller/admin/EditProductServlet.java</file>

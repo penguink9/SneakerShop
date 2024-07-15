@@ -235,37 +235,7 @@
                 }
             });
         </script>
-        <script>// Graph
-            //Horizontal Bar Chart
-            new Chart(document.getElementById("horizontalBar"), {
-                "type": "horizontalBar",
-                "data": {
-                    "labels": ["Tháng 12", "Tháng 11", "Tháng 10", "Tháng 9", "Tháng 8", "Tháng 7", "Tháng 6", "Tháng 5", "Tháng 4", "Tháng 3", "Tháng 2", "Tháng 1"],
-                    "datasets": [{
-                            "label": "Doanh thu $",
-                            "data": [${totalMoneyMonth12}, ${totalMoneyMonth11}, ${totalMoneyMonth10}, ${totalMoneyMonth9}, ${totalMoneyMonth8}, ${totalMoneyMonth7}, ${totalMoneyMonth6}, ${totalMoneyMonth5}, ${totalMoneyMonth4}, ${totalMoneyMonth3}, ${totalMoneyMonth2}, ${totalMoneyMonth1}],
-                            "fill": false,
-                            "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
-                                "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
-                                "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)", "#99FF99", "#FFFF99", "#FFC1C1", "#FFB5C5", "#DDC488"
-                            ],
-                            "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
-                                "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)", "	#66FF99", "#FFFF66", "#EEB4B4", "#EEA9B8", "#ECAB53"
-                            ],
-                            "borderWidth": 1
-                        }]
-                },
-                "options": {
-                    "scales": {
-                        "xAxes": [{
-                                "ticks": {
-                                    "beginAtZero": true
-                                }
-                            }]
-                    }
-                }
-            });
-        </script>
+        
         <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script>
         <!-- MDB -->
         <script type="text/javascript" src="js/mdb.min.js"></script>

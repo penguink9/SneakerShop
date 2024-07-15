@@ -167,6 +167,23 @@ public class UserDAO extends DBContext {
             return false; // Optionally, you might want to handle this differently
         }
     }
+    public void updateUser(User u) {
+        String sql = "UPDATE Users SET FullName = ?, Password = ?, RoleID = ?, ImageURL = ?, Email = ?, BirthDay = ?, Address = ?, Phone = ? WHERE UserName = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, u.getFullName());
+            preparedStatement.setString(2, u.getPassword());
+            preparedStatement.setInt(3, u.getRoleID());
+            preparedStatement.setString(4, u.getImageURL());
+            preparedStatement.setString(5, u.getEmail());
+            preparedStatement.setString(6, u.getBirthDay());
+            preparedStatement.setString(7, u.getAddress());
+            preparedStatement.setString(8, u.getPhone());
+            preparedStatement.setString(9, u.getUserName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();

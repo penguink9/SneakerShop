@@ -22,10 +22,6 @@ import model.User;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,18 +39,23 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         }
+        
+        HttpSession session = request.getSession();
+        Long lockTime = (Long) session.getAttribute("lockTime");
+        if (lockTime != null) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lockTime < 60000) { // 60000 ms = 1 minute
+                request.setAttribute("isLocked", true);
+                request.setAttribute("error", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau 1 phút.");
+            } else {
+                session.removeAttribute("lockTime");
+                session.setAttribute("failedAttempts", 0);
+            }
+        }
+        
         request.getRequestDispatcher("login.jsp").forward(request, response);
-
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -64,12 +65,40 @@ public class LoginServlet extends HttpServlet {
         String remember = request.getParameter("remember");
         UserDAO ud = new UserDAO();
         HttpSession session = request.getSession();
+
+        Integer failedAttempts = (Integer) session.getAttribute("failedAttempts");
+        if (failedAttempts == null) {
+            failedAttempts = 0;
+        }
+
+        Long lockTime = (Long) session.getAttribute("lockTime");
+        if (lockTime != null) {
+long currentTime = System.currentTimeMillis();
+            if (currentTime - lockTime < 60000) { // 60000 ms = 1 minute
+                request.setAttribute("isLocked", true);
+                request.setAttribute("error", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau 1 phút.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            } else {
+                session.removeAttribute("lockTime");
+                session.setAttribute("failedAttempts", 0);
+            }
+        }
+
         if (!ud.checkUser(uName, uPass)) {
-            request.setAttribute("error", "Username or password invalid!");
+            failedAttempts++;
+            session.setAttribute("failedAttempts", failedAttempts);
+            if (failedAttempts >= 5) {
+                session.setAttribute("lockTime", System.currentTimeMillis());
+                request.setAttribute("isLocked", true);
+                request.setAttribute("error", "Tài khoản của bạn đã bị khóa do đăng nhập sai 5 lần. Vui lòng thử lại sau 1 phút.");
+            } else {
+                request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
+            }
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            User user = ud.getUserByUsername(uName);
-            session.setAttribute("account", user);
+            session.setAttribute("account", ud.getUserByUsername(uName));
+            session.setAttribute("failedAttempts", 0);  // Đặt lại số lần đăng nhập sai về 0 sau khi đăng nhập thành công
 
             Cookie u = new Cookie("cUName", uName);
             Cookie p = new Cookie("pUName", uPass);
@@ -83,31 +112,28 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(u);
             response.addCookie(p);
             response.addCookie(r);
-            String image = user.getImageURL();
+
+            User user = ud.getUserByUsername(uName);
             CartDAO cartDAO = new CartDAO();
             Cart cart = cartDAO.getCartByUsername(uName);
-            if (cartDAO.getCartByUsername(uName) == null) {
+            if (cart == null) {
                 cart = new Cart(uName);
                 cartDAO.addCart(cart);
-            } else {
-                cart = cartDAO.getCartByUsername(uName);
             }
-            if (user.getRoleID() == 0) {
-                session.setAttribute("role", "admin");
-            } else {
-                session.setAttribute("role", "user");
-            }
-            session.setAttribute("account", user);
+
+            session.setAttribute("role", user.getRoleID() == 0 ? "admin" : "user");
             session.setAttribute("cart", cart);
-            session.setAttribute("imageUser", image);
+            session.setAttribute("imageUser", user.getImageURL());
             session.setAttribute("address", user.getAddress());
             session.setAttribute("name", user.getFullName());
             session.setAttribute("phone", user.getPhone());
             session.setAttribute("email", user.getEmail());
             session.setAttribute("birthdate", user.getBirthDay());
+
             response.sendRedirect("home");
         }
     }
+
 
     /**
      * Returns a short description of the servlet.
@@ -116,7 +142,7 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+return "Short description";
     }
 
 }

@@ -152,7 +152,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="align-middle"><strong>${String.format("%.0f", o.product.price)} VNĐ</strong></td>
-                                                    <td class="align-middle"><strong>${o.size}</strong></td>
+                                                    <td class="align-middle"><strong id="sizeDisplay"></strong></td>
                                                     <td class="align-middle">
                                                         <form action="editCart?pid=${o.product.productID}&size=${o.size}" method="post">
                                                             <div class="quantity-container">
@@ -220,5 +220,25 @@
         </div>
     </div>
     <jsp:include page="footer.jsp"></jsp:include>
+    <script>
+        function getSizeDisplay(size) {
+            switch(size) {
+                case 'S':
+                    return 37;
+                case 'M':
+                    return 38;
+                case 'L':
+                    return 39;
+                default:
+                    return size; // Default to the original size if it doesn't match 'S', 'M', or 'L'
+            }
+        }
+
+        // Example object
+        const o = { size: 'M' };
+
+        // Set the size display
+        document.getElementById('sizeDisplay').textContent = getSizeDisplay(o.size);
+    </script>
 </body>
 </html>
